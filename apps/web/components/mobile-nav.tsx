@@ -89,7 +89,7 @@ export function MobileNav() {
                 onClick={close}
                 className="flex items-center gap-3"
               >
-                <AlLogo className="w-8 h-8 text-claw" />
+                <AlLogo className="w-8 h-8" fill="white" />
                 <span className="text-lg font-semibold text-white">
                   Applied Leverage
                 </span>

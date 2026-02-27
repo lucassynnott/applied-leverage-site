@@ -1,11 +1,11 @@
 export const CLAW_COLOR = "#ff1493";
 export const CLAW_VIEWBOX = "0 0 500 500";
 
-// The actual AL logo SVG Lucas designed
+// Exact AL_LOGO.svg from Lucas — fill is parameterized
 export function AlLogo({
   size,
   className,
-  fill = "currentColor",
+  fill = "white",
 }: {
   size?: number;
   className?: string;

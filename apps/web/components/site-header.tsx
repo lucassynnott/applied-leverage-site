@@ -68,7 +68,7 @@ export function SiteHeader() {
     <header className="mb-16">
       <div className="flex items-center justify-between">
         <Link href="/" className="group flex items-center gap-3">
-          <AlLogo className="w-8 h-8 shrink-0 text-claw transition-transform duration-200 ease-out group-hover:rotate-[-8deg] motion-reduce:transition-none" />
+          <AlLogo className="w-8 h-8 shrink-0 transition-transform duration-200 ease-out group-hover:rotate-[-8deg] motion-reduce:transition-none" fill="white" />
           <span className="text-lg font-semibold group-hover:text-white transition-colors duration-200 ease-out">
             {SITE_NAME}
           </span>
