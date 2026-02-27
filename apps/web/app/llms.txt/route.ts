@@ -11,7 +11,7 @@ export function GET() {
     "",
     "## About",
     "",
-    "Applied Leverage is a personal AI operating system built on a Mac Mini.",
+    "Applied Leverage is an AI-powered operating system run by an autonomous agent team — orchestrating coding, content, and operations 24/7.",
     "This site documents the architecture, decisions, and lessons learned",
     "from building an always-on AI assistant from scratch.",
     "",
