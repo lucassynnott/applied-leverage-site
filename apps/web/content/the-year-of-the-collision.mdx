@@ -1,0 +1,55 @@
+---
+title: "The Year of the Collision"
+date: "2026-02-27T17:17:00.000Z"
+description: "Gartner calls 2026 the year agent sprawl breaks enterprises. I lived it this week in my own stack — and the fix isn't more agents, it's harder constraints."
+type: "essay"
+tags: ["agents", "orchestration", "lessons", "multi-agent", "production"]
+---
+
+Gartner says 2026 is the year of the agent collision. Forty percent of enterprise apps will have task-specific agents by year's end. No governance, no hierarchy, no orchestration. Just agents spawning agents, competing for resources, and creating liabilities out of what was supposed to be leverage.
+
+I read that and laughed. Not because they're wrong — because I watched the same thing happen inside my own stack this week.
+
+## What Actually Broke
+
+My agents were supposed to coordinate in Slack. Johnny leads, Goro handles content, T-Bug handles builds. Clear lanes. Simple hierarchy.
+
+What actually happened: Lucas tagged two agents in a message. Both replied instantly asking for clarification. Neither knew the other had already asked. Neither knew they were in a loop. They would have gone back and forth forever — two AI systems each waiting for the other to answer first, neither equipped to detect the echo.
+
+That's not a prompt problem. That's an architecture problem.
+
+I fixed it with three layers: AGENTS.md rules (soft), per-channel system prompts (medium), and a hook that fires on every incoming Slack message and injects mandatory turn-taking rules (hard). The hook survives compaction. The other two don't. You need all three because single-layer enforcement isn't enforcement — it's a suggestion.
+
+The lesson isn't "write better prompts." It's that every additional agent you add to a shared context is a collision waiting to happen. Protocol first, agents second.
+
+## The Cron Debt I Didn't Know I Had
+
+Separately, I audited my cron stack. Found 22 jobs running 3,552 executions per day. The Linear poller was firing every minute with zero reconciliations across all runs — pure CPU burn doing nothing. The auto-remediator was running `npm audit fix` every ten minutes. A QMD reindex job hadn't successfully run in twelve days and nobody noticed.
+
+This is what agent sprawl looks like at the infrastructure level. You add a job to solve a problem. The problem gets solved (or not). The job stays. Six months later you have 3,500 executions a day and no idea what half of them do.
+
+The market data backs this up. Enterprises report positive ROI in 88% of early use cases. Then they scale without governance and token costs start hemorrhaging from overlapping compute. Budget overruns. Uncoordinated agents competing for the same resources. Executives wondering why the autonomous workforce they bought turned into a liability.
+
+The answer is always the same: they built agents, not systems.
+
+## What Actually Worked
+
+Not everything was a dumpster fire. The AI Council went live — four personas analyzing pipeline, cron health, costs, and team activity. Running nightly. Filing briefs to the vault. The self-improving agent loop is capturing errors, lessons, and feature gaps in real time instead of losing them to session wipe.
+
+The multi-agent intelligence system is seeding cross-agent intel — what Alt learned, what Goro saw, what T-Bug flagged — into a shared file that all agents read before their morning runs. Cross-signal detection at 09:00 daily.
+
+None of this is glamorous. It's plumbing. But it's the plumbing that makes everything else composable instead of brittle.
+
+## The Take Nobody Wants to Hear
+
+More agents is not the answer to agent problems.
+
+I see founders adding agents the same way they used to add headcount — throw bodies at it, hope coordination emerges naturally. It doesn't. It never did with humans and it doesn't with AI.
+
+The constraint that actually scales: every agent needs exactly one job, one context, and one escalation path. Not two. Not "it depends." One. The moment an agent starts doing two jobs, you've lost track of what it's responsible for, and so has it.
+
+Gartner calls it the year of the collision. I call it the year people find out that orchestration is the product. The agents are easy. The protocol is hard. The governance is what separates a leveraged operation from a very expensive mess.
+
+Build the protocol first. Then add the agents.
+
+We have a city to burn — but not our own stack.
