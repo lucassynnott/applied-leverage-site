@@ -4,7 +4,7 @@ import type { ContentType } from "@/lib/posts";
 import { clawSvg, CLAW_COLOR } from "@/lib/claw";
 import { formatDateStatic } from "@/lib/date";
 
-export const alt = "JoelClaw";
+export const alt = "Applied Leverage";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -199,7 +199,7 @@ export default async function Image({
                 color: "#525252",
               }}
             >
-              joelclaw.com
+              applied-leverage.com
             </div>
           </div>
         </div>

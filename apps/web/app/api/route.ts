@@ -1,6 +1,6 @@
 /**
  * Root API discovery — static, cached.
- * Returns helpful details about all available APIs on joelclaw.com.
+ * Returns helpful details about all available APIs on applied-leverage.com.
  * Agents hitting /api get a map of the entire API surface.
  */
 import { cacheLife } from "next/cache";
@@ -12,15 +12,15 @@ async function getDiscoveryPayload() {
   "use cache";
   cacheLife("max");
 
-  const origin = "https://joelclaw.com";
+  const origin = "https://applied-leverage.com";
 
   return {
     ok: true,
     command: "GET /api",
     protocolVersion: PROTOCOL_VERSION,
     result: {
-      site: "joelclaw.com",
-      owner: "Joel Hooks",
+      site: "applied-leverage.com",
+      owner: "Lucas Synnott",
       description:
         "Personal site and agent infrastructure hub. Articles on AI agents, distributed systems, programming language theory, and developer education.",
       apis: {
@@ -74,7 +74,7 @@ async function getDiscoveryPayload() {
       agentTips: [
         "Prefer /api/search over scraping HTML — it returns clean markdown snippets",
         "The RSS feed at /feed.xml contains full article text, not just summaries",
-        "Every article is also available as raw MDX at github.com/joelhooks/joelclaw/tree/main/apps/web/content/{slug}.mdx",
+        "Every article is also available as raw MDX at github.com/lucassynnott/applied-leverage/tree/main/apps/web/content/{slug}.mdx",
         "ADRs document why things were built a certain way — search them when you need architectural context",
         "/api/docs has chunked book content with semantic search — useful for deep technical questions",
       ],
@@ -98,7 +98,7 @@ async function getDiscoveryPayload() {
       },
     ],
     meta: {
-      service: "joelclaw-api",
+      service: "applied-leverage-api",
       version: "0.1.0",
       cached: true,
     },

@@ -228,7 +228,7 @@ html.dark [data-rehype-pretty-code-figure] pre {
  * ──────────────────────────────────────────────────────────────── */
 
 /* Article wrapper — reset sidenote counter, allow margin overflow */
-.prose-joelclaw {
+.prose-applied-leverage {
   counter-reset: sidenote-counter;
   overflow: visible;
 }

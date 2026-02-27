@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { getAllDiscoveries } from "@/lib/discoveries";
 import { clawSvg, CLAW_COLOR } from "@/lib/claw";
 
-export const alt = "Cool Finds — JoelClaw";
+export const alt = "Cool Finds — Applied Leverage";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -248,7 +248,7 @@ export default function Image() {
                 display: "flex",
               }}
             >
-              joelclaw.com
+              applied-leverage.com
             </div>
           </div>
         </div>

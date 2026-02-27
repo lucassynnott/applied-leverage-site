@@ -38,7 +38,7 @@ export function blogJsonLd() {
     "@type": "Blog",
     name: SITE_NAME,
     description:
-      "Building a personal AI operating system from scratch. Architecture decisions, working code, and the journey from zero to a composable agent system.",
+      "AI-powered agency operations. Building autonomous agent systems for the creator economy.",
     url: SITE_URL,
     author: {
       "@type": "Person",
@@ -54,7 +54,7 @@ export function personJsonLd() {
     "@type": "Person",
     name: AUTHOR.name,
     url: AUTHOR.url,
-    sameAs: ["https://github.com/joelhooks", "https://twitter.com/jhooks"],
+    sameAs: ["https://github.com/lucassynnott", "https://twitter.com/LucasSynnott"],
   };
 }
 

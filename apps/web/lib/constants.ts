@@ -1,11 +1,11 @@
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://joelclaw.com";
-export const SITE_NAME = "JoelClaw";
-export const SITE_TAGLINE = "My Bespoke OpenClaw-inspired Mac Mini";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://applied-leverage-site.vercel.app";
+export const SITE_NAME = "Applied Leverage";
+export const SITE_TAGLINE = "AI-Powered Agency Operations";
 export const SITE_DESCRIPTION =
-  "JoelClaw: My Bespoke OpenClaw-inspired Mac Mini. Learning how personal AI systems work by building one from scratch.";
+  "Applied Leverage: AI-powered agency operations. Building autonomous agent systems for the creator economy.";
 export const SITE_COPYRIGHT_YEAR =
   process.env.NEXT_PUBLIC_SITE_COPYRIGHT_YEAR ?? "2026";
 export const AUTHOR = {
-  name: "Joel Hooks",
-  url: "https://joelclaw.com",
+  name: "Lucas Synnott",
+  url: "https://applied-leverage-site.vercel.app",
 };

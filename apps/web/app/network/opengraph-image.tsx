@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { clawSvg, CLAW_COLOR } from "@/lib/claw";
 
-export const alt = "Network — JoelClaw";
+export const alt = "Network — Applied Leverage";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -212,7 +212,7 @@ export default function Image() {
                 display: "flex",
               }}
             >
-              joelclaw.com
+              applied-leverage.com
             </div>
           </div>
         </div>

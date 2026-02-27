@@ -23,7 +23,7 @@ export default function Error({ error, reset }: ErrorProps) {
               route error
             </p>
             <h1 className="font-mono text-lg text-neutral-200">
-              joelclaw<span className="text-claw">.</span>system
+              applied-leverage<span className="text-claw">.</span>system
             </h1>
           </div>
 

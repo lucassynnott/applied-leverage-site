@@ -32,7 +32,7 @@ export async function POST(request: Request) {
         data: {
           contentSlug,
           contentType,
-          source: "joelclaw-web",
+          source: "applied-leverage-web",
         },
       }),
     });

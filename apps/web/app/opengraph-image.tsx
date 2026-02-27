@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { clawSvg } from "@/lib/claw";
 
 export const runtime = "edge";
-export const alt = "JoelClaw";
+export const alt = "Applied Leverage";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -38,7 +38,7 @@ export default function Image() {
               letterSpacing: "-0.02em",
             }}
           >
-            JoelClaw
+            Applied Leverage
           </div>
           <div style={{ fontSize: 24, color: "#737373" }}>
             My Bespoke OpenClaw-inspired Mac Mini

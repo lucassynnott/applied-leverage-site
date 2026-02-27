@@ -90,7 +90,7 @@ function buildOpenApi(origin: string) {
   return {
     openapi: "3.1.0",
     info: {
-      title: "Joelclaw Docs API",
+      title: "Applied Leverage Docs API",
       version: VERSION,
       description:
         "Public proxy surface for docs-api with generous Upstash rate limiting at /api/docs.",
@@ -230,7 +230,7 @@ function discoveryResponse(request: NextRequest) {
   return NextResponse.json(
     ok(command, {
       service: "docs-api",
-      surface: "joelclaw.com/api/docs",
+      surface: "applied-leverage.com/api/docs",
       auth: {
         mode: "public-read",
         note: "No bearer required on /api/docs routes",

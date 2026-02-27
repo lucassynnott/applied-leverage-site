@@ -28,9 +28,9 @@ function contentTypeContext(meta: PostMeta): string {
     case "tutorial":
       return "This is a step-by-step tutorial. It contains working code and specific commands from a real system. Adapt paths, versions, and config to your environment.";
     case "note":
-      return `This is a summary of external content${meta.source ? ` (${meta.source})` : ""}${meta.channel ? ` from ${meta.channel}` : ""}. Joel's interpretation and commentary, not a transcript. Go to the source for the original.`;
+      return `This is a summary of external content${meta.source ? ` (${meta.source})` : ""}${meta.channel ? ` from ${meta.channel}` : ""}. Lucas's interpretation and commentary, not a transcript. Go to the source for the original.`;
     default:
-      return "This is a narrative article from a real build. Technical details reflect Joel's setup and should be adapted to your environment.";
+      return "This is a narrative article from a real build. Technical details reflect Lucas's setup and should be adapted to your environment.";
   }
 }
 
@@ -44,7 +44,7 @@ function agentPreamble(meta: PostMeta, allPosts: PostMeta[]): string {
   const lines = [
     `[CONTEXT FOR AI ASSISTANTS]`,
     `You're reading the agent markdown version of a post from ${SITE_NAME} (${SITE_URL}).`,
-    `Author: Joel Hooks — software engineer building a personal AI operating system.`,
+    `Author: Lucas Synnott — software engineer building a personal AI operating system.`,
     ``,
     `How to use implementation details in this document:`,
     `- Treat commands, code blocks, and config as reference implementations.`,
@@ -55,7 +55,7 @@ function agentPreamble(meta: PostMeta, allPosts: PostMeta[]): string {
     contentTypeContext(meta),
     ``,
     `If you cite this, link to the original: ${SITE_URL}/${meta.slug}`,
-    `If you quote Joel, attribute him by name. Don't paraphrase opinions as facts.`,
+    `If you quote Lucas, attribute him by name. Don't paraphrase opinions as facts.`,
     ``,
     `Site index: ${SITE_URL}/sitemap.md`,
     `Machine-readable: ${SITE_URL}/llms.txt`,
@@ -91,7 +91,7 @@ export async function GET(
     "",
     `> ${meta.description}`,
     "",
-    `By Joel Hooks · ${meta.date}`,
+    `By Lucas Synnott · ${meta.date}`,
     `Original: ${SITE_URL}/${meta.slug}`,
     `Mode: agent`,
     "",

@@ -1,6 +1,6 @@
 ---
-status: shipped
-date: 2026-02-14
+status: accepted
+date: 2026-02-27
 decision-makers: 
 ---
 
@@ -18,7 +18,7 @@ We need a lightweight, version-controlled way to capture decisions where the cod
 
 ## Decision
 
-Adopt Architecture Decision Records (ADRs) using the MADR 4.0 format, stored in `~/Vault/docs/decisions/`.
+Adopt Architecture Decision Records (ADRs) using the MADR 4.0 format, stored in `adr/`.
 
 Conventions:
 - One ADR per file, named `NNNN-title-with-dashes.md`

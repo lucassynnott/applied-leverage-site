@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    creator: "@joelclaw",
+    creator: "@applied-leverage",
   },
   alternates: {
     canonical: SITE_URL,
@@ -89,7 +89,7 @@ export default function RootLayout({
             Agent search API (HATEOAS JSON): /api/search?q={query}
             Docs/books API (HATEOAS JSON): /api/docs
             RSS feed (full content): /feed.xml
-            Raw MDX source: https://github.com/joelhooks/joelclaw/tree/main/apps/web/content/{slug}.mdx
+            Raw MDX source: https://github.com/lucassynnott/applied-leverage/tree/main/apps/web/content/{slug}.mdx
             ADR index: /adrs
             Start with GET /api/agent/search (no query) for full discovery. */}
         <script
@@ -121,7 +121,7 @@ export default function RootLayout({
                   <Rss className="w-4 h-4" />
                 </a>
                 <a
-                  href="https://x.com/joelclaw"
+                  href="https://x.com/applied-leverage"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors"
@@ -130,7 +130,7 @@ export default function RootLayout({
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                 </a>
                 <a
-                  href="https://github.com/joelhooks/joelclaw"
+                  href="https://github.com/lucassynnott/applied-leverage"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors"

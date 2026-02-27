@@ -59,7 +59,7 @@ const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 export const metadata: Metadata = {
   title: `Network — ${SITE_NAME}`,
   description:
-    "The joelclaw network — Talos k8s on Apple Silicon with 66 Inngest functions, Typesense search, AT Protocol PDS, Convex real-time data, and 64TB archival storage.",
+    "The applied-leverage network — Talos k8s on Apple Silicon with 66 Inngest functions, Typesense search, AT Protocol PDS, Convex real-time data, and 64TB archival storage.",
 };
 
 async function listByType(type: string): Promise<ContentResourceDoc[]> {
@@ -246,7 +246,7 @@ async function NetworkSections() {
 
       <section className="space-y-3">
         <h2 className="text-xs uppercase tracking-widest text-neutral-500 font-medium">
-          K8s Pods <span className="text-neutral-700 normal-case tracking-normal">joelclaw namespace</span>
+          K8s Pods <span className="text-neutral-700 normal-case tracking-normal">applied-leverage namespace</span>
         </h2>
         <div className="border border-neutral-800/40 rounded-lg overflow-hidden">
           <table className="w-full text-sm">

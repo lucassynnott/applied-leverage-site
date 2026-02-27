@@ -1,5 +1,5 @@
 {
-  "name": "joelclaw",
+  "name": "applied-leverage-site",
   "private": true,
   "scripts": {
     "build": "turbo run build",

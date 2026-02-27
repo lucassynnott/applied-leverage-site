@@ -25,7 +25,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
                   fatal error
                 </p>
                 <h1 className="font-mono text-lg text-neutral-200">
-                  joelclaw<span className="text-claw">.</span>system
+                  applied-leverage<span className="text-claw">.</span>system
                 </h1>
               </div>
 

@@ -233,9 +233,9 @@ function discoveryResponse(request: NextRequest) {
   return NextResponse.json(
     envelope("GET /api/search", {
       service: SERVICE,
-      description: "Agent-first search for joelclaw.com — Joel Hooks' site about building AI agent infrastructure, distributed systems, and developer education.",
+      description: "Agent-first search for applied-leverage.com — Lucas Synnott' site about building AI agent infrastructure, distributed systems, and developer education.",
       about: {
-        who: "Joel Hooks — builder, educator, co-founder of egghead.io",
+        who: "Lucas Synnott — builder, educator, co-founder of egghead.io",
         what: "Articles, architecture decision records (ADRs), research, /cool discoveries, and system documentation",
         topics: [
           "AI agent infrastructure (LiveKit voice agents, gateway daemons, Inngest durable functions)",
@@ -260,7 +260,7 @@ function discoveryResponse(request: NextRequest) {
     }, [
       {
         command: `curl -sS "${origin}/api/search?q=voice+agent"`,
-        description: "How Joel built a self-hosted voice agent with LiveKit",
+        description: "Applied Leverage AI agent documentation",
       },
       {
         command: `curl -sS "${origin}/api/search?q=plan+9"`,

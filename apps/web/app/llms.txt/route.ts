@@ -11,7 +11,7 @@ export function GET() {
     "",
     "## About",
     "",
-    "JoelClaw is a personal AI operating system built on a Mac Mini.",
+    "Applied Leverage is a personal AI operating system built on a Mac Mini.",
     "This site documents the architecture, decisions, and lessons learned",
     "from building an always-on AI assistant from scratch.",
     "",

@@ -97,7 +97,7 @@ export function MobileNav() {
                   <path fill="currentColor" d={CLAW_PATH} />
                 </svg>
                 <span className="text-lg font-semibold text-white">
-                  JoelClaw
+                  Applied Leverage
                 </span>
               </Link>
               <button

@@ -113,7 +113,7 @@ async function PostContent({ content }: { content: string }) {
   "use cache";
 
   return (
-    <div className="prose-joelclaw">
+    <div className="prose-applied-leverage">
       <MDXRemote
         source={content}
         components={mdxComponents}
