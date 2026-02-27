@@ -39,7 +39,7 @@ export const getCurrentUser = query({
   },
 });
 
-/** Check if current user is the owner (Joel, GitHub ID 86834) */
+/** Check if current user is the owner (Lucas, GitHub ID 3947311) */
 export const isOwner = query({
   args: {},
   handler: async (ctx) => {
@@ -59,7 +59,7 @@ export const isOwner = query({
         where: [
           { field: "userId", value: user._id },
           { field: "providerId", value: "github" },
-          { field: "accountId", value: "86834" },
+          { field: "accountId", value: "3947311" },
         ],
       }
     );

@@ -36,7 +36,7 @@ function collectionToUrl(hit: {
     case "blog_posts":
       return hit.path ? `/${hit.path}` : "#";
     case "discoveries":
-      return hit.path ? `/discoveries/${hit.path}` : "/discoveries";
+      return hit.path ? `/cool/${hit.path}` : "/cool";
     case "memory_observations":
       return `/memory`;
     case "system_log":
@@ -82,7 +82,7 @@ const COLLECTION_LABELS: Record<string, string> = {
   adrs: "adr",
   vault_notes: "vault",
   blog_posts: "article",
-  discoveries: "discovery",
+  discoveries: "cool",
   memory_observations: "memory",
   system_log: "syslog",
   otel_events: "otel",
