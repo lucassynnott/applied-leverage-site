@@ -11,7 +11,7 @@ import {
   SITE_COPYRIGHT_YEAR,
 } from "@/lib/constants";
 import { personJsonLd } from "@/lib/jsonld";
-import { Github, Rss } from "lucide-react";
+
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
 
@@ -114,29 +114,13 @@ export default function RootLayout({
               </p>
               <div className="flex items-center gap-3">
                 <a
-                  href="/feed.xml"
-                  className="hover:text-white transition-colors"
-                  aria-label="RSS Feed"
-                >
-                  <Rss className="w-4 h-4" />
-                </a>
-                <a
-                  href="https://x.com/applied-leverage"
+                  href="https://x.com/lucassynnott"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors"
                   aria-label="X (Twitter)"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                </a>
-                <a
-                  href="https://github.com/lucassynnott/applied-leverage"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
-                  aria-label="GitHub"
-                >
-                  <Github className="w-4 h-4" />
                 </a>
               </div>
             </div>
