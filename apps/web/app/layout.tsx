@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { GeistPixelSquare } from "geist/font/pixel";
 import { Suspense } from "react";
 import { NuqsAdapter } from "nuqs/adapters/next";
+import { Analytics } from "@vercel/analytics/next";
 import {
   SITE_URL,
   SITE_NAME,
@@ -126,6 +127,7 @@ export default function RootLayout({
             </div>
           </footer>
         </div>
+      <Analytics />
       </body>
     </html>
   );
