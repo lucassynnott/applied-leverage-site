@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 /**
  * Dashboard layout — static shell, auth checked client-side.
  * Full route cache: this layout is pre-rendered at build time.
