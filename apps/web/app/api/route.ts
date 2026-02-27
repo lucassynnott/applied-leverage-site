@@ -68,7 +68,7 @@ async function getDiscoveryPayload() {
         },
         discoveries: {
           description: "Curated finds — papers, talks, repos, tools worth knowing about",
-          url: `${origin}/cool`,
+          url: `${origin}/discoveries`,
         },
       },
       agentTips: [

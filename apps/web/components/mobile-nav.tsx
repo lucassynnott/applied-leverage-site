@@ -9,7 +9,7 @@ import { authClient } from "@/lib/auth-client";
 
 const PUBLIC_NAV = [
   { href: "/", label: "Writing" },
-  { href: "/cool", label: "Cool" },
+  { href: "/discoveries", label: "Discoveries" },
   { href: "/adrs", label: "ADRs" },
   { href: "/network", label: "Network" },
 ];

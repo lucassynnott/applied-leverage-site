@@ -162,7 +162,7 @@ function resolveUrl(collection: string, doc: Record<string, unknown>): string | 
     case "blog_posts":
       return `/${slug || slugify(str(doc.title) || "")}`;
     case "discoveries":
-      return `/cool/${slug || slugify(str(doc.title) || "")}`;
+      return `/discoveries/${slug || slugify(str(doc.title) || "")}`;
     case "vault_notes": {
       const isAdr = str(doc.type) === "adr" || (path && (path.includes("/adrs/") || path.includes("docs/decisions/")));
       if (isAdr) return `/adrs/${slug || ""}`;
@@ -236,7 +236,7 @@ function discoveryResponse(request: NextRequest) {
       description: "Agent-first search for applied-leverage.com — Lucas Synnott' site about building AI agent infrastructure, distributed systems, and developer education.",
       about: {
         who: "Lucas Synnott — builder, educator, co-founder of egghead.io",
-        what: "Articles, architecture decision records (ADRs), research, /cool discoveries, and system documentation",
+        what: "Articles, architecture decision records (ADRs), research, /discoveries, and system documentation",
         topics: [
           "AI agent infrastructure (LiveKit voice agents, gateway daemons, Inngest durable functions)",
           "Distributed systems (Kubernetes, Redis event bridges, self-hosted services)",

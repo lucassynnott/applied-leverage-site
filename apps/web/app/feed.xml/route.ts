@@ -27,7 +27,7 @@ export function GET() {
 
   const discoveryItems = discoveries.map((d) => ({
     title: d.title,
-    link: `${SITE_URL}/cool/${d.slug}`,
+    link: `${SITE_URL}/discoveries/${d.slug}`,
     description: `[${d.tags.join(", ")}] ${d.relevance ?? d.title}`,
     date: d.discovered,
     category: "discovery",
