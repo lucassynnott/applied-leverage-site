@@ -1,41 +1,28 @@
 export const CLAW_COLOR = "#ff1493";
 export const CLAW_VIEWBOX = "0 0 500 500";
 
-// Exact AL_LOGO.svg from Lucas — fill is parameterized
+// AL logo — uses the actual PNG from Lucas
 export function AlLogo({
   size,
   className,
-  fill = "white",
 }: {
   size?: number;
   className?: string;
   fill?: string;
 }) {
   return (
-    <svg
-      viewBox="0 0 500 500"
-      width={size}
-      height={size}
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/al-logo.png"
+      alt="Applied Leverage"
+      width={size ?? 32}
+      height={size ?? 32}
       className={className}
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle cx="250" cy="250" r="230" fill="none" stroke={fill} strokeWidth="20" />
-      <text
-        x="250"
-        y="290"
-        fontFamily="Arial, Helvetica, sans-serif"
-        fontSize="220"
-        fontWeight="bold"
-        fill={fill}
-        textAnchor="middle"
-      >
-        AL
-      </text>
-    </svg>
+    />
   );
 }
 
-// Path-only version for OG images (Satori can't render <text>)
+// Path-only version for OG images (Satori can't render <img>)
 export function clawSvg(size: number, fill = CLAW_COLOR) {
   return (
     <svg viewBox={CLAW_VIEWBOX} width={size} height={size}>
