@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRef, useEffect, useState, useCallback } from "react";
-import { CLAW_PATH } from "@/lib/claw";
+import { AlLogo } from "@/lib/claw";
 import { SITE_NAME } from "@/lib/constants";
 import { SearchDialog } from "./search-dialog";
 import { MobileNav } from "./mobile-nav";
@@ -68,13 +68,7 @@ export function SiteHeader() {
     <header className="mb-16">
       <div className="flex items-center justify-between">
         <Link href="/" className="group flex items-center gap-3">
-          <svg
-            viewBox="0 0 512 512"
-            className="w-8 h-8 shrink-0 text-claw transition-transform duration-200 ease-out group-hover:rotate-[-8deg] motion-reduce:transition-none"
-            aria-hidden="true"
-          >
-            <path fill="currentColor" d={CLAW_PATH} />
-          </svg>
+          <AlLogo className="w-8 h-8 shrink-0 text-claw transition-transform duration-200 ease-out group-hover:rotate-[-8deg] motion-reduce:transition-none" />
           <span className="text-lg font-semibold group-hover:text-white transition-colors duration-200 ease-out">
             {SITE_NAME}
           </span>

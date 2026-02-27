@@ -4,7 +4,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { CLAW_PATH } from "@/lib/claw";
+import { AlLogo } from "@/lib/claw";
 import { authClient } from "@/lib/auth-client";
 
 const PUBLIC_NAV = [
@@ -89,13 +89,7 @@ export function MobileNav() {
                 onClick={close}
                 className="flex items-center gap-3"
               >
-                <svg
-                  viewBox="0 0 512 512"
-                  className="w-8 h-8 text-claw"
-                  aria-hidden="true"
-                >
-                  <path fill="currentColor" d={CLAW_PATH} />
-                </svg>
+                <AlLogo className="w-8 h-8 text-claw" />
                 <span className="text-lg font-semibold text-white">
                   Applied Leverage
                 </span>
