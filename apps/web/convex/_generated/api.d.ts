@@ -9,6 +9,7 @@
  */
 
 import type * as auth from "../auth.js";
+import type * as contentIngest from "../contentIngest.js";
 import type * as contentResources from "../contentResources.js";
 import type * as http from "../http.js";
 import type * as memoryObservations from "../memoryObservations.js";
@@ -26,6 +27,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
+  contentIngest: typeof contentIngest;
   contentResources: typeof contentResources;
   http: typeof http;
   memoryObservations: typeof memoryObservations;
