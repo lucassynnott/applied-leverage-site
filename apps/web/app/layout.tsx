@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { GeistPixelSquare } from "geist/font/pixel";
 import { Suspense } from "react";
 import { NuqsAdapter } from "nuqs/adapters/next";
+import { ConvexClientProvider } from "@/app/ConvexClientProvider";
 import { Analytics } from "@vercel/analytics/next";
 import {
   SITE_URL,
@@ -105,9 +106,11 @@ export default function RootLayout({
           <Suspense fallback={<header className="mb-16" />}>
             <SiteHeader />
           </Suspense>
-          <NuqsAdapter>
+          <ConvexClientProvider>
+      <NuqsAdapter>
             <main>{children}</main>
           </NuqsAdapter>
+      </ConvexClientProvider>
           <footer className="mt-12 sm:mt-16 lg:mt-24 pt-6 sm:pt-8 border-t border-neutral-800 text-sm text-neutral-500">
             <div className="flex items-center justify-between">
               <p>
