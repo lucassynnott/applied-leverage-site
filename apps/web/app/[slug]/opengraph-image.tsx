@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { getPost, getPostSlugs } from "@/lib/posts";
 import type { ContentType } from "@/lib/posts";
-import { clawSvg, CLAW_COLOR } from "@/lib/claw";
+import { CLAW_COLOR } from "@/lib/claw";
 import { formatDateStatic } from "@/lib/date";
 
 export const alt = "Applied Leverage";
@@ -191,7 +191,8 @@ export default async function Image({
               gap: "14px",
             }}
           >
-            {clawSvg(36)}
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img src="https://os.appliedleverage.io/al-logo.png" alt="AL" width="36" height="36" />
             <div
               style={{
                 fontSize: 22,
@@ -199,7 +200,7 @@ export default async function Image({
                 color: "#525252",
               }}
             >
-              applied-leverage.com
+              os.appliedleverage.io
             </div>
           </div>
         </div>

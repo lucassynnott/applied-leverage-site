@@ -1,5 +1,4 @@
 import { ImageResponse } from "next/og";
-import { clawSvg } from "@/lib/claw";
 
 export const runtime = "edge";
 export const alt = "Applied Leverage";
@@ -21,7 +20,13 @@ export default function Image() {
           gap: "32px",
         }}
       >
-        {clawSvg(160)}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="https://os.appliedleverage.io/al-logo.png"
+          alt="AL"
+          width="160"
+          height="160"
+        />
         <div
           style={{
             display: "flex",
@@ -41,7 +46,7 @@ export default function Image() {
             Applied Leverage
           </div>
           <div style={{ fontSize: 24, color: "#737373" }}>
-            My Bespoke OpenClaw-inspired Mac Mini
+            AI-Powered Operating System
           </div>
         </div>
       </div>

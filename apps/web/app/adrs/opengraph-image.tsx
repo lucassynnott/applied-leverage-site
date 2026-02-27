@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 import { getAllAdrs } from "@/lib/adrs";
-import { clawSvg, CLAW_COLOR } from "@/lib/claw";
+import { CLAW_COLOR } from "@/lib/claw";
 
 export const alt = "Architecture Decision Records — Applied Leverage";
 export const size = { width: 1200, height: 630 };
@@ -176,7 +176,8 @@ export default async function Image() {
               gap: "16px",
             }}
           >
-            {clawSvg(36)}
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img src="https://os.appliedleverage.io/al-logo.png" alt="AL" width="36" height="36" />
             <div
               style={{
                 fontSize: 22,
@@ -185,7 +186,7 @@ export default async function Image() {
                 display: "flex",
               }}
             >
-              applied-leverage.com
+              os.appliedleverage.io
             </div>
           </div>
         </div>
