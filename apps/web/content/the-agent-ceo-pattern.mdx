@@ -1,13 +1,10 @@
 ---
-type: discovery
-slug: the-agent-ceo-pattern
-source: "https://os.appliedleverage.io"
-discovered: "2026-02-27"
-tags: [pattern, agents, architecture, orchestration, operations, applied-leverage]
-relevance: "Directly describes how Applied Leverage runs — a CEO agent that never writes code, only orchestrates sub-agents that do."
+title: "The Agent CEO Pattern"
+date: "2026-02-27T16:45:00"
+description: "Most people give one AI agent all the jobs. That doesn't scale. Here's the architecture that actually works — one orchestrator that never writes code, spawning specialists that do."
+type: "essay"
+tags: ["agents", "architecture", "orchestration", "applied-leverage"]
 ---
-
-# The Agent CEO Pattern
 
 Most people building with AI agents make the same mistake: they give one agent all the jobs. Research, coding, deployment, content, QA — one model, one context window, one prayer.
 
@@ -43,15 +40,10 @@ This is where most autonomous agent setups fall apart. The orchestrator doesn't 
 
 The fix isn't more prompting. It's building the judgment into the system: QA gates, build checks, explicit acceptance criteria in every brief. The agent doesn't need taste if the process has standards.
 
-## Key Ideas
+## What This Means for You
 
 - **One agent, one job.** The CEO orchestrates. Sub-agents execute. Nobody does both.
 - **Context is a resource.** Protect the orchestrator's context like you'd protect your own attention. Every token of code in there is a token of strategy you lost.
 - **Delegation requires specification.** Vague tasks produce vague output. The brief IS the product.
 - **Process replaces judgment.** Build quality gates into the pipeline so the CEO doesn't need to be the taste police.
 - **The founder's job changes.** You stop writing prompts and start designing systems. Your 4-hour workday becomes reviewing outputs and setting direction.
-
-## Links
-
-- [OpenClaw — the gateway that makes this possible](https://github.com/openclaw/openclaw)
-- [Applied Leverage OS](https://os.appliedleverage.io)
