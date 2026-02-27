@@ -1,6 +1,6 @@
 /**
  * Better Auth + Convex integration — ADR-0075
- * GitHub OAuth for joelclaw.com dashboard
+ * GitHub OAuth for os.appliedleverage.io — owner-only access
  */
 import { createClient, type GenericCtx } from "@convex-dev/better-auth";
 import { convex } from "@convex-dev/better-auth/plugins";
@@ -51,7 +51,7 @@ export const isOwner = query({
       return false;
     }
     if (!user) return false;
-    // Check component's accounts table for GitHub provider with Joel's ID
+    // Only Lucas (GitHub ID 3947311) can access protected pages
     const account = await ctx.runQuery(
       components.betterAuth.adapter.findOne,
       {
