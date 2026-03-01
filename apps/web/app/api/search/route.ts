@@ -11,6 +11,7 @@ import { type Duration, Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { NextRequest, NextResponse } from "next/server";
 import { getAllAdrs } from "@/lib/adrs";
+import { buildSearchNextActions } from "./action-utils";
 
 const TYPESENSE_URL = process.env.TYPESENSE_URL || "http://localhost:8108";
 const TYPESENSE_API_KEY = process.env.TYPESENSE_API_KEY || "";
@@ -404,24 +405,16 @@ export async function GET(request: NextRequest) {
     };
 
     return NextResponse.json(
-      envelope(command, searchResult, [
-        ...(hits.length > 0 ? [{
-          command: `curl -sS "${origin}${hits[0].url}"`,
-          description: `Read top result: ${hits[0].title}`,
-        }] : []),
-        {
-          command: `curl -sS "${origin}/api/search?q=${encodeURIComponent(q)}&limit=${Math.min(limit + 10, 50)}"`,
-          description: "Expand search (more results)",
-        },
-        {
-          command: `curl -sS "${origin}/api/docs/search?q=${encodeURIComponent(q)}&perPage=5"`,
-          description: "Search docs/books (chunked documents)",
-        },
-        {
-          command: `curl -sS "${origin}/feed.xml"`,
-          description: "RSS feed (all articles, full content)",
-        },
-      ]),
+      envelope(
+        command,
+        searchResult,
+        buildSearchNextActions({
+          origin,
+          query: q,
+          limit,
+          topHit: hits[0],
+        }),
+      ),
     );
   } catch (error) {
     return NextResponse.json(
