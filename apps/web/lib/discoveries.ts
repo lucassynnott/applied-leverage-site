@@ -9,8 +9,6 @@ export type DiscoveryMeta = {
   discovered: string;
   tags: string[];
   relevance: string;
-  /** File mtime epoch ms — used for sort tiebreaking within same date */
-  _mtime?: number;
 };
 
 const discoveriesDir = path.join(process.cwd(), "content", "discoveries");
@@ -25,7 +23,6 @@ export function getAllDiscoveries(): DiscoveryMeta[] {
     .map((filename) => {
       const filePath = path.join(discoveriesDir, filename);
       const raw = fs.readFileSync(filePath, "utf-8");
-      const mtime = fs.statSync(filePath).mtimeMs;
       const { data, content } = matter(raw);
 
       // Title from frontmatter, H1, or filename
@@ -51,15 +48,14 @@ export function getAllDiscoveries(): DiscoveryMeta[] {
         discovered: (data.discovered as string) ?? "",
         tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
         relevance: (data.relevance as string) ?? "",
-        _mtime: mtime,
       };
     })
     .sort((a, b) => {
       // Primary: discovered date descending
       if (a.discovered !== b.discovered)
         return a.discovered > b.discovered ? -1 : 1;
-      // Secondary: file mtime descending (newest first)
-      return (b._mtime ?? 0) - (a._mtime ?? 0);
+      // Secondary: slug ascending (stable, deterministic)
+      return a.slug < b.slug ? -1 : 1;
     });
 }
 
