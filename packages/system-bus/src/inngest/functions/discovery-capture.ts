@@ -1,10 +1,30 @@
 import { inngest } from "../client";
 import { $ } from "bun";
+import { join } from "node:path";
 import { DISCOVERY_PROMPT } from "../prompts/discovery";
 import { infer } from "../../lib/inference";
 import { emitMeasuredOtelEvent, emitOtelEvent } from "../../observability/emit";
 
-const VAULT_DISCOVERIES = `${process.env.HOME}/Vault/Resources/discoveries`;
+type DiscoveryCapturePaths = {
+  vaultDiscoveriesDir: string;
+  tempRoot: string;
+};
+
+export function resolveDiscoveryCapturePaths(
+  env: NodeJS.ProcessEnv = process.env
+): DiscoveryCapturePaths {
+  const home = env.HOME || env.USERPROFILE || "/Users/joel";
+  const vaultRoot = env.VAULT_PATH || join(home, "Vault");
+  const tempRoot = env.TMPDIR || env.TEMP || env.TMP || "/tmp";
+
+  return {
+    vaultDiscoveriesDir: join(vaultRoot, "Resources", "discoveries"),
+    tempRoot,
+  };
+}
+
+const { vaultDiscoveriesDir: VAULT_DISCOVERIES, tempRoot: TEMP_ROOT } =
+  resolveDiscoveryCapturePaths();
 
 /**
  * Discovery Capture — investigates interesting finds and writes vault notes.
@@ -58,7 +78,7 @@ export const discoveryCapture = inngest.createFunction(
 
             if (url?.includes("github.com")) {
               sourceType = "repo";
-              const tmpDir = `/tmp/discovery-${Date.now()}`;
+              const tmpDir = join(TEMP_ROOT, `discovery-${Date.now()}`);
               try {
                 await $`git clone --depth 1 ${url} ${tmpDir} 2>/dev/null`.quiet();
                 const readmePath = `${tmpDir}/README.md`;
