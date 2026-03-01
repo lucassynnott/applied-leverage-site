@@ -1,10 +1,3 @@
----
-status: proposed
-date: 2026-02-27
-decision-makers: 
-title: README
----
-
 # Architecture Decision Records (ADR)
 
 How this system is built and why. Every decision that changes the architecture gets written down.
