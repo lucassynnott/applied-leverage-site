@@ -106,11 +106,13 @@ export default function RootLayout({
           <Suspense fallback={<header className="mb-16" />}>
             <SiteHeader />
           </Suspense>
+          <Suspense fallback={null}>
           <ConvexClientProvider>
       <NuqsAdapter>
             <main>{children}</main>
           </NuqsAdapter>
       </ConvexClientProvider>
+          </Suspense>
           <footer className="mt-12 sm:mt-16 lg:mt-24 pt-6 sm:pt-8 border-t border-neutral-800 text-sm text-neutral-500">
             <div className="flex items-center justify-between">
               <p>
