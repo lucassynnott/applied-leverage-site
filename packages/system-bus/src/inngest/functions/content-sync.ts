@@ -4,25 +4,60 @@ import { infer } from "../../lib/inference";
 import { emitOtelEvent } from "../../observability/emit";
 import Redis from "ioredis";
 import { getRedisPort } from "../../lib/redis";
+import { join, relative } from "node:path";
+
+type ContentDir = {
+  name: string;
+  source: string;
+  dest: string;
+  gitPath: string;
+  skipFiles: string[];
+};
+
+type ContentSyncPaths = {
+  repoRoot: string;
+  contentDirs: ContentDir[];
+};
+
+export function resolveContentSyncPaths(
+  env: NodeJS.ProcessEnv = process.env
+): ContentSyncPaths {
+  const home = env.HOME || env.USERPROFILE || "/Users/joel";
+  const vaultRoot = env.VAULT_PATH || join(home, "Vault");
+  const repoRoot = (env.JOELCLAW_REPO_ROOT || join(home, "Code", "joelhooks", "joelclaw"))
+    .replace(/[\\/]+$/, "");
+  const webContentRoot = join(repoRoot, "apps", "web", "content");
+
+  const contentDirs = [
+    {
+      name: "adrs",
+      source: join(vaultRoot, "docs", "decisions"),
+      dest: join(webContentRoot, "adrs"),
+      skipFiles: ["readme.md"],
+    },
+    {
+      name: "discoveries",
+      source: join(vaultRoot, "Resources", "discoveries"),
+      dest: join(webContentRoot, "discoveries"),
+      skipFiles: [],
+    },
+  ];
+
+  return {
+    repoRoot,
+    contentDirs: contentDirs.map((dir) => ({
+      ...dir,
+      gitPath: relative(repoRoot, dir.dest),
+      skipFiles: [...dir.skipFiles],
+    })),
+  };
+}
 
 /**
  * Content directories to sync from Vault → website.
  * Add new entries here as content types grow.
  */
-const CONTENT_DIRS = [
-  {
-    name: "adrs",
-    source: "/Users/joel/Vault/docs/decisions/",
-    dest: "/Users/joel/Code/joelhooks/joelclaw/apps/web/content/adrs/",
-    skipFiles: ["readme.md"],
-  },
-  {
-    name: "discoveries",
-    source: "/Users/joel/Vault/Resources/discoveries/",
-    dest: "/Users/joel/Code/joelhooks/joelclaw/apps/web/content/discoveries/",
-    skipFiles: [],
-  },
-] as const;
+const { repoRoot: REPO_ROOT, contentDirs: CONTENT_DIRS } = resolveContentSyncPaths();
 
 const CHANGES_NOT_COMMITTED_LAST_NOTIFIED_KEY =
   "content-sync:changes_not_committed:last_notified";
@@ -85,7 +120,7 @@ export const contentSync = inngest.createFunction(
 
         for (const dir of CONTENT_DIRS) {
           const result = await syncFiles(dir.source, dir.dest, {
-            skipFiles: dir.skipFiles as unknown as string[],
+            skipFiles: dir.skipFiles,
           });
           out.push({
             name: dir.name,
@@ -114,13 +149,7 @@ export const contentSync = inngest.createFunction(
           .join("\n");
 
         // Stage all content directories
-        const gitPaths = CONTENT_DIRS.map(
-          (d) =>
-            d.dest.replace(
-              "/Users/joel/Code/joelhooks/joelclaw/",
-              ""
-            )
-        );
+        const gitPaths = CONTENT_DIRS.map((d) => d.gitPath);
 
         // commitAndPush stages the first path; stage all paths manually
         return commitAndPushMultiple(
@@ -244,7 +273,7 @@ async function commitAndPushMultiple(
 
   // Check if anything is actually staged
   const diffProc = Bun.spawn(["git", "diff", "--cached", "--quiet"], {
-    cwd: "/Users/joel/Code/joelhooks/joelclaw/",
+    cwd: REPO_ROOT,
   });
   const clean = (await diffProc.exited) === 0;
 
@@ -270,8 +299,6 @@ async function commitAndPushMultiple(
   await git("push", "origin", "main");
   return true;
 }
-
-const REPO_ROOT = "/Users/joel/Code/joelhooks/joelclaw/";
 
 const SAFETY_SYSTEM_PROMPT = `You are a git push safety gate for a content sync pipeline.
 
