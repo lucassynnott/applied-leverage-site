@@ -1,0 +1,13 @@
+[Unit]
+Description=Applied Leverage system-bus worker
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=%h/applied-leverage-site/packages/system-bus/start.sh
+WorkingDirectory=%h/applied-leverage-site/packages/system-bus
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target
