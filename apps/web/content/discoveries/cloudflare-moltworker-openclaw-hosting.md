@@ -3,7 +3,7 @@ type: discovery
 slug: cloudflare-moltworker-openclaw-hosting
 discovered: "2026-02-28"
 tags: [tool, ai, agents, cloudflare, hosting, infrastructure, openclaw]
-relevance: "Cloudflare Moltworker lets you self-host OpenClaw on edge infrastructure for ~$35/month — no Mac Mini required."
+relevance: "Cloudflare Moltworker lets you self-host OpenClaw on edge infrastructure for ~\$35/month — no Mac Mini required."
 ---
 
 # Cloudflare Moltworker: OpenClaw Without the Hardware
