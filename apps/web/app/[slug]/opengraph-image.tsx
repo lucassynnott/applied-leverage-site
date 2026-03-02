@@ -4,6 +4,7 @@ import type { ContentType } from "@/lib/posts";
 import { CLAW_COLOR } from "@/lib/claw";
 import { formatDateStatic } from "@/lib/date";
 
+export const runtime = "nodejs";
 export const alt = "Applied Leverage";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";

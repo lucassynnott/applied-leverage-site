@@ -2,6 +2,7 @@ import { ImageResponse } from "next/og";
 import { getAllAdrs } from "@/lib/adrs";
 import { CLAW_COLOR } from "@/lib/claw";
 
+export const runtime = "nodejs";
 export const alt = "Architecture Decision Records — Applied Leverage";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
