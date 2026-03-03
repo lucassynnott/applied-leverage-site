@@ -22,14 +22,11 @@ export { approvalRequest, approvalResolve } from "./approval";
 export { taskTriage } from "./task-triage";
 export { checkSessions } from "./check-sessions";
 export { checkTriggers } from "./check-triggers";
-export {
-  checkSystemHealth,
-  checkSystemHealthSignalsSchedule,
-} from "./check-system-health";
+export { checkSystemHealth } from "./check-system-health";
 export { networkStatusUpdate } from "./network-status-update";
 export { checkMemoryReview } from "./check-memory-review";
 export { checkVaultSync } from "./check-vault-sync";
-export { checkGranola, granolaCheckCron } from "./check-granola";
+export { checkGranola } from "./check-granola";
 export { checkEmail } from "./check-email";
 export { checkCalendar } from "./check-calendar";
 export { checkLoops } from "./check-loops";

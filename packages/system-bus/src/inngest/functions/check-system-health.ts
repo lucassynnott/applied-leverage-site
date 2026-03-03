@@ -1203,34 +1203,3 @@ export const checkSystemHealth = inngest.createFunction(
     };
   }
 );
-
-export const checkSystemHealthSignalsSchedule = inngest.createFunction(
-  { id: "check/system-health-signals-schedule" },
-  [{ cron: "7 * * * *" }],
-  async ({ step }) => {
-    await step.sendEvent("request-health-signals-slice", {
-      name: "system/health.requested",
-      data: {
-        mode: "signals",
-        source: "system-health-signals-hourly",
-      },
-    });
-
-    await step.run("emit-otel-health-signals-scheduled", async () => {
-      await emitOtelEvent({
-        level: "info",
-        source: "worker",
-        component: "check-system-health",
-        action: "system.health.signals.scheduled",
-        success: true,
-        metadata: {
-          mode: "signals",
-          slicePolicy: HEALTH_SLICE_POLICIES.signals,
-          cron: "7 * * * *",
-        },
-      });
-    });
-
-    return { status: "scheduled", mode: "signals" };
-  }
-);

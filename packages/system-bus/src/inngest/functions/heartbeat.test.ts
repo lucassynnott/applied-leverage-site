@@ -11,7 +11,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
-import { heartbeatCron } from "./heartbeat";
+import { buildHeartbeatFanoutEvents, heartbeatCron } from "./heartbeat";
 
 const originalHome = process.env.HOME;
 const originalUserProfile = process.env.USERPROFILE;
@@ -192,6 +192,36 @@ describe("FRIC-4 heartbeat pruning acceptance tests", () => {
         mode: "core",
         source: "heartbeat-15m",
       },
+    });
+  });
+
+  test("routes hourly monitoring checks through heartbeat fan-out windows", () => {
+    const hourlyEvents = buildHeartbeatFanoutEvents(new Date("2026-03-03T16:00:00.000Z"));
+    const quarterPastEvents = buildHeartbeatFanoutEvents(new Date("2026-03-03T16:15:00.000Z"));
+
+    const hasHourlySignals = (events: Array<{ name?: string; data?: Record<string, unknown> }>) =>
+      events.some(
+        (event) => event.name === "system/health.requested" && event.data?.mode === "signals"
+      );
+    const hasGranolaCheck = (events: Array<{ name?: string }>) =>
+      events.some((event) => event.name === "granola/check.requested");
+    const hasO11yTriage = (events: Array<{ name?: string }>) =>
+      events.some((event) => event.name === "check/o11y-triage.requested");
+
+    expect({
+      hourlySignalsAtTopOfHour: hasHourlySignals(hourlyEvents),
+      granolaAtTopOfHour: hasGranolaCheck(hourlyEvents),
+      o11yAtTopOfHour: hasO11yTriage(hourlyEvents),
+      hourlySignalsAtQuarterPast: hasHourlySignals(quarterPastEvents),
+      granolaAtQuarterPast: hasGranolaCheck(quarterPastEvents),
+      o11yAtQuarterPast: hasO11yTriage(quarterPastEvents),
+    }).toMatchObject({
+      hourlySignalsAtTopOfHour: true,
+      granolaAtTopOfHour: true,
+      o11yAtTopOfHour: true,
+      hourlySignalsAtQuarterPast: false,
+      granolaAtQuarterPast: false,
+      o11yAtQuarterPast: true,
     });
   });
 });

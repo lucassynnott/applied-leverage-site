@@ -12,12 +12,30 @@ import { getRedisPort } from "../../lib/redis";
  */
 
 import { inngest } from "../client";
+import type { Events } from "../client";
 import Redis from "ioredis";
 import { existsSync, readdirSync, rmSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { emitOtelEvent } from "../../observability/emit";
 
-const HEARTBEAT_EVENTS = [
+type HeartbeatFanoutEventName =
+  | "tasks/triage.requested"
+  | "sessions/prune.requested"
+  | "triggers/audit.requested"
+  | "system/health.requested"
+  | "memory/review.check"
+  | "vault/sync.check"
+  | "email/triage.requested"
+  | "calendar/daily.check"
+  | "loops/stale.check"
+  | "check/o11y-triage.requested"
+  | "granola/check.requested";
+
+type HeartbeatFanoutEvent = {
+  [K in HeartbeatFanoutEventName]: { name: K; data: Events[K]["data"] };
+}[HeartbeatFanoutEventName];
+
+const HEARTBEAT_BASE_EVENTS: HeartbeatFanoutEvent[] = [
   { name: "tasks/triage.requested" as const, data: {} },
   { name: "sessions/prune.requested" as const, data: {} },
   { name: "triggers/audit.requested" as const, data: {} },
@@ -30,6 +48,21 @@ const HEARTBEAT_EVENTS = [
   { name: "email/triage.requested" as const, data: {} },
   { name: "calendar/daily.check" as const, data: {} },
   { name: "loops/stale.check" as const, data: {} },
+  {
+    name: "check/o11y-triage.requested" as const,
+    data: {
+      reason: "heartbeat-15m-monitoring",
+      requestedBy: "system/heartbeat",
+    },
+  },
+];
+
+const HEARTBEAT_HOURLY_EVENTS: HeartbeatFanoutEvent[] = [
+  {
+    name: "system/health.requested" as const,
+    data: { mode: "signals" as const, source: "heartbeat-hourly" as const },
+  },
+  { name: "granola/check.requested" as const, data: {} },
 ];
 
 const DAILY_DIGEST_FANOUT_KEY_PREFIX = "heartbeat:digest:fanout";
@@ -78,6 +111,22 @@ function losAngelesDateParts(now = new Date()): { date: string; hour: number; mi
 function isDailyDigestWindow(hour: number, minute: number): boolean {
   // Heartbeat runs every 15m; this window catches the 23:45 run.
   return hour === 23 && minute >= 45;
+}
+
+function isHourlyMonitoringWindow(minute: number): boolean {
+  // Heartbeat runs every 15m; emit hourly checks at :00.
+  return minute === 0;
+}
+
+export function buildHeartbeatFanoutEvents(now = new Date()): HeartbeatFanoutEvent[] {
+  const { minute } = losAngelesDateParts(now);
+  const events = [...HEARTBEAT_BASE_EVENTS];
+
+  if (isHourlyMonitoringWindow(minute)) {
+    events.push(...HEARTBEAT_HOURLY_EVENTS);
+  }
+
+  return events;
 }
 
 function listFilesRecursive(root: string): string[] {
@@ -129,9 +178,10 @@ export const heartbeatCron = inngest.createFunction(
   [{ cron: "*/15 * * * *" }],
   async ({ step }) => {
     await step.run("prune-old-sessions", async () => pruneOldSessionFiles());
+    const fanoutEvents = await step.run("build-fanout-events", async () => buildHeartbeatFanoutEvents());
 
     // Fan out all checks as independent events
-    await step.sendEvent("fan-out-checks", HEARTBEAT_EVENTS);
+    await step.sendEvent("fan-out-checks", fanoutEvents);
 
     // Daily-only fan-out: request digest if today's digest has not been generated yet.
     const shouldRequestDigest = await step.run("maybe-request-daily-digest", async () => {
@@ -161,7 +211,7 @@ export const heartbeatCron = inngest.createFunction(
         action: "heartbeat.cron.fanout",
         success: true,
         metadata: {
-          fanoutCount: HEARTBEAT_EVENTS.length,
+          fanoutCount: fanoutEvents.length,
           digestRequested: shouldRequestDigest,
         },
       });
@@ -177,9 +227,10 @@ export const heartbeatWake = inngest.createFunction(
   [{ event: "system/heartbeat.wake" }],
   async ({ step }) => {
     await step.run("prune-old-sessions", async () => pruneOldSessionFiles());
+    const fanoutEvents = await step.run("build-fanout-events", async () => buildHeartbeatFanoutEvents());
 
     // Same fan-out on manual wake
-    await step.sendEvent("fan-out-checks", HEARTBEAT_EVENTS);
+    await step.sendEvent("fan-out-checks", fanoutEvents);
 
     const shouldRequestDigest = await step.run("maybe-request-daily-digest", async () => {
       const { date, hour, minute } = losAngelesDateParts();
@@ -208,7 +259,7 @@ export const heartbeatWake = inngest.createFunction(
         action: "heartbeat.wake.fanout",
         success: true,
         metadata: {
-          fanoutCount: HEARTBEAT_EVENTS.length,
+          fanoutCount: fanoutEvents.length,
           digestRequested: shouldRequestDigest,
         },
       });

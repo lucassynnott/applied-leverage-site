@@ -90,8 +90,8 @@ describe("o11y triage runbook metadata", () => {
       function: o11yTriage as any,
       events: [
         {
-          name: "inngest/scheduled.timer",
-          data: { cron: "TZ=America/Los_Angeles */15 * * * *" },
+          name: "check/o11y-triage.requested",
+          data: { reason: "test", requestedBy: "unit-test" },
         } as any,
       ],
     });
@@ -121,8 +121,8 @@ describe("o11y triage runbook metadata", () => {
       function: o11yTriage as any,
       events: [
         {
-          name: "inngest/scheduled.timer",
-          data: { cron: "TZ=America/Los_Angeles */15 * * * *" },
+          name: "check/o11y-triage.requested",
+          data: { reason: "test", requestedBy: "unit-test" },
         } as any,
       ],
     });

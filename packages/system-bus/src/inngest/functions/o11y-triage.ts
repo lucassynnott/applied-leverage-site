@@ -466,11 +466,14 @@ function mergeReclassifiedBuckets(
 }
 
 export const o11yTriage = inngest.createFunction(
-  { id: "check/o11y-triage", concurrency: { limit: 1 }, retries: 1 },
-  [
-    { cron: "TZ=America/Los_Angeles */15 * * * *" },
-    { event: "check/o11y-triage.requested" },
-  ],
+  {
+    id: "check/o11y-triage",
+    concurrency: { limit: 1 },
+    throttle: { key: "o11y-triage", limit: 1, period: "15m" },
+    timeouts: { start: "10m", finish: "10m" },
+    retries: 1,
+  },
+  [{ event: "check/o11y-triage.requested" }],
   async ({ step, ...rest }) => {
     const gateway = (rest as { gateway?: GatewayContext }).gateway;
 
