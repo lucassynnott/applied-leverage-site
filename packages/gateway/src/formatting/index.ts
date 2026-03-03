@@ -1,9 +1,10 @@
 import { CLI_CAPABILITIES, CLI_FORMATTING_GUIDE } from "./cli";
 import { DISCORD_CAPABILITIES, DISCORD_FORMATTING_GUIDE } from "./discord";
 import { IMESSAGE_CAPABILITIES, IMESSAGE_FORMATTING_GUIDE } from "./imessage";
+import { SLACK_CAPABILITIES, SLACK_FORMATTING_GUIDE } from "./slack";
 import { TELEGRAM_CAPABILITIES, TELEGRAM_FORMATTING_GUIDE } from "./telegram";
 
-export type ChannelPlatform = "discord" | "telegram" | "imessage" | "cli";
+export type ChannelPlatform = "discord" | "telegram" | "imessage" | "cli" | "slack";
 
 export type InjectChannelContextOptions = {
   source: string;
@@ -38,12 +39,18 @@ const PLATFORM_CONTEXT: Record<ChannelPlatform, PlatformContext> = {
     capabilities: CLI_CAPABILITIES,
     guide: CLI_FORMATTING_GUIDE,
   },
+  slack: {
+    channel: "slack",
+    capabilities: SLACK_CAPABILITIES,
+    guide: SLACK_FORMATTING_GUIDE,
+  },
 };
 
 function resolvePlatform(source: string): ChannelPlatform | undefined {
   if (source.startsWith("discord:")) return "discord";
   if (source.startsWith("telegram:")) return "telegram";
   if (source.startsWith("imessage:")) return "imessage";
+  if (source.startsWith("slack:") || source.startsWith("slack-intel:")) return "slack";
   if (source === "cli" || source === "tui" || source.startsWith("cli:")) return "cli";
   return undefined;
 }
@@ -105,4 +112,6 @@ export {
   IMESSAGE_FORMATTING_GUIDE,
   TELEGRAM_CAPABILITIES,
   TELEGRAM_FORMATTING_GUIDE,
+  SLACK_CAPABILITIES,
+  SLACK_FORMATTING_GUIDE,
 };
