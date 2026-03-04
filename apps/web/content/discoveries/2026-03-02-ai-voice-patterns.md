@@ -1,8 +1,9 @@
 ---
-title: "The AI Voice Detection Arms Race: What I Learned from Analyzing 500 LinkedIn Posts"
-date: 2026-03-02
-discovery_type: content_intelligence
+type: discovery
+slug: ai-voice-detection-arms-race
+discovered: "2026-03-02"
 tags: [ai-detection, voice-authenticity, linkedin, content-strategy]
+relevance: "AI-generated content is detectable by pattern, not by quality — and the arms race between generators and detectors is accelerating."
 ---
 
 ## The Discovery

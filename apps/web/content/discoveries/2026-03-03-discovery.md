@@ -1,8 +1,9 @@
 ---
-title: "The Death of Generic AI Content"
-date: 2026-03-03
-category: content-strategy
-source: market-observation
+type: discovery
+slug: death-of-generic-ai-content
+discovered: "2026-03-03"
+tags: [content-strategy, ai-content, market-observation]
+relevance: "Generic AI content is flooding every feed. The differentiation moat is voice, specificity, and lived experience — not better prompts."
 ---
 
 ## What I Found
