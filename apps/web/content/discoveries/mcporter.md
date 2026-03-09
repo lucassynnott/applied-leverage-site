@@ -1,44 +1,54 @@
 ---
 type: discovery
 slug: mcporter
-discovered: "2026-03-05"
-tags: [mcp, tools, agents, infrastructure, cli]
-relevance: "mcporter is the CLI that makes MCP servers accessible to any workflow — no agent required."
+discovered: "2026-03-09"
+tags: [cli, mcp, tools, developer-tools]
+relevance: "mcporter lets you call MCP servers directly from CLI — no Claude/ChatGPT required. If you run local AI tools, this bridges them to the MCP ecosystem."
 ---
 
-# mcporter: MCP Servers Without the Headache
+# mcporter: Call MCP Servers Without the Chatbot Wrapper
 
-If you've been paying attention to the AI agent space, you've heard about MCP (Model Context Protocol). Anthropic made it open. Everyone's building servers. The problem? Actually using them was a pain in the ass.
+Most people discover MCP through Claude Desktop or Cursor. You install the plugin, point it at a config file, and suddenly your AI can use your tools.
 
-Enter mcporter.
+But what if you want that same power in your own scripts? What if you're building a CLI that needs to call an MCP server for data, not just prompting an LLM?
+
+That's where mcporter comes in.
 
 ## The Core Idea
 
-mcporter is a CLI that lets you list, configure, auth, and call MCP servers directly — HTTP or stdio, doesn't matter. It's the missing glue between "cool, there's an MCP server for that" and actually getting work done.
+mcporter is a CLI that lets you call MCP (Model Context Protocol) servers directly. No chatbot in the middle. You give it a server config, a tool name, and arguments — it executes and returns JSON.
 
-Think of it as the docker CLI but for MCP servers. You can:
-- `mcporter list` — see what's installed
-- `mcporter config` — add/edit server configs
-- `mcporter call` — invoke a tool on any server
-- Generate types, run ad-hoc servers, the whole thing
+```bash
+mcporter call --server notion --tool search \
+  --args '{"query": "Q4 revenue"}'
+```
 
-No agent required. No framework lock-in. Just pipes.
+It handles:
+- Server lifecycle (start/stop)
+- Tool discovery (what can this server even do?)
+- Request/response parsing
+- Auth injection
+
+You can also use it interactively — mcporter drops you into a REPL where you explore available servers and call tools by name. Great for debugging or poking around an unfamiliar MCP server.
 
 ## Why It Matters for Applied Leverage
 
-We're building a Zero Human Company. That means our agents need to talk to everything — Notion, GitHub, our own custom tools. MCP is the protocol that makes that possible.
+We're all-in on MCP as the glue protocol. Our entire agent stack runs on it — Johnny (our coordinator), the sub-agents, the coding agents, all of it.
 
-mcporter is the utility layer that lets us:
-1. Spin up new tool integrations fast
-2. Test MCP servers without writing code
-3. Hook external services into our agent workflows without dancing around authentication
+mcporter is the missing link when you want to:
+- **Script AI workflows** that span multiple MCP servers
+- **Build internal CLIs** that leverage existing MCP tools
+- **Test MCP servers** without spinning up Claude Desktop
+- **Bridge MCP to other systems** (cron jobs, webhooks, traditional scripts)
 
-It's not sexy. It's not going to blow up on Twitter. But it's the kind of infrastructure that stops you from reinventing the wheel every time you want your agent to do something new.
+If you're building anything that needs to talk to an MCP server from code — not just from a chat UI — mcporter is the tool.
 
 ## The Catch
 
-- If you're not running agents, mcporter does nothing for you
-- The stdio servers require some setup (you gotta manage the processes yourself)
-- Documentation could be better — it's a young tool
+mcporter is young. It works for stdio-based MCP servers (the most common kind), but HTTP-based MCP servers are still experimental. The docs assume you're comfortable with JSON argv passing, which can feel clunky compared to natural language.
 
-But if you're building agent infrastructure? This is a tool worth having in your belt.
+Also: you still need to know what tools exist on your target server. mcporter can list them, but you need to understand the shape of the arguments. No magic inference.
+
+## Bottom Line
+
+If you're running any local AI setup and want programmatic access to MCP tools, mcporter fills a gap that nobody else is addressing. It's not for end users — it's for builders who need automation, not chat.
