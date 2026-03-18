@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent OS Diagnostic — Applied Leverage</title>
+<meta name="description" content="90 minutes to know exactly what to automate first. A paid audit that maps your bottlenecks and delivers a custom Automation Priority Map.">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--card:#111111;--el:#161616;--b:#1d1d1d;--bh:#2a2a2a;
+  --t:#f0f0f0;--m:#888888;--d:#444444;
+  --a:#f26464;--ah:#ff7a7a;--ag:rgba(242,100,100,.22);
+  --grn:#4caf84;
+  --f:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  --mono:"SF Mono","Fira Code",monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t);font-family:var(--f);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:700px;margin:0 auto;padding:0 24px}
+header{padding:22px 0 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--b)}
+.logo{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--m);text-decoration:none}
+.logo em{color:var(--a);font-style:normal}
+.hbadge{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--d);background:var(--el);border:1px solid var(--bh);padding:4px 10px;border-radius:100px}
+footer{border-top:1px solid var(--b);padding:24px 0;text-align:center;font-size:12px;color:var(--d)}
+footer a{color:var(--m);text-decoration:none}
+footer a:hover{color:var(--a)}
+.hero{padding:64px 0 48px}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--a);margin-bottom:18px}
+h1{font-size:clamp(28px,5.5vw,48px);font-weight:800;line-height:1.08;letter-spacing:-.03em;margin-bottom:22px}
+h1 em{font-style:normal;color:var(--a)}
+.sub{font-size:17px;color:var(--m);line-height:1.75;margin-bottom:10px;max-width:580px}
+.sub2{font-size:17px;color:var(--t);line-height:1.75;margin-bottom:34px;max-width:580px;font-weight:500}
+.hero-meta{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:38px}
+.hmeta{font-size:13px;color:var(--m);display:flex;align-items:center;gap:7px}
+.hmeta b{color:var(--a)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 26px;font-size:14px;font-weight:700;border-radius:8px;cursor:pointer;border:none;font-family:var(--f);transition:all .22s ease;letter-spacing:.01em;text-decoration:none}
+.btn-r{background:var(--a);color:#fff}
+.btn-r:hover{background:var(--ah);transform:translateY(-1px);box-shadow:0 8px 24px var(--ag)}
+.btn-o{background:transparent;color:var(--m);border:1px solid var(--bh);padding:12px 20px;font-size:13px}
+.btn-o:hover{background:var(--el);border-color:var(--a);color:var(--t)}
+.cta-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+section{padding:52px 0;border-top:1px solid var(--b)}
+.s-label{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--d);margin-bottom:14px}
+.s-h2{font-size:clamp(20px,4vw,30px);font-weight:800;line-height:1.15;letter-spacing:-.025em;margin-bottom:18px}
+.s-h2 em{font-style:normal;color:var(--a)}
+.s-body{font-size:15px;color:var(--m);line-height:1.8;margin-bottom:14px;max-width:600px}
+.s-body strong{color:var(--t);font-weight:600}
+.prob-list{list-style:none;margin:20px 0;display:flex;flex-direction:column;gap:10px}
+.prob-list li{font-size:15px;color:var(--m);display:flex;align-items:flex-start;gap:10px;line-height:1.65}
+.prob-list li::before{content:"→";color:var(--a);font-weight:700;flex-shrink:0;margin-top:2px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0}
+@media(max-width:520px){.cards{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--bh);border-radius:10px;padding:20px}
+.card-icon{font-size:22px;margin-bottom:10px}
+.card-title{font-size:13px;font-weight:700;color:var(--t);margin-bottom:6px}
+.card-body{font-size:13px;color:var(--m);line-height:1.6}
+.callout{background:var(--el);border:1px solid var(--bh);border-left:3px solid var(--a);border-radius:10px;padding:22px 24px;margin:24px 0}
+.callout-title{font-size:14px;font-weight:700;color:var(--a);margin-bottom:8px}
+.callout-body{font-size:14px;color:var(--m);line-height:1.7}
+.callout-body strong{color:var(--t)}
+.fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0}
+@media(max-width:520px){.fit-grid{grid-template-columns:1fr}}
+.fit-col h4{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.fit-yes h4{color:var(--grn)}
+.fit-no h4{color:var(--d)}
+.fit-list{list-style:none;display:flex;flex-direction:column;gap:9px}
+.fit-list li{font-size:14px;color:var(--m);display:flex;align-items:flex-start;gap:9px;line-height:1.5}
+.fit-list li .mk{flex-shrink:0}
+.fit-yes .mk{color:var(--grn)}
+.fit-no .mk{color:var(--d)}
+.timeline{list-style:none;display:flex;flex-direction:column;position:relative;margin:24px 0}
+.timeline::before{content:"";position:absolute;left:16px;top:0;bottom:0;width:1px;background:var(--bh)}
+.tl-item{display:flex;gap:18px;padding-bottom:24px;position:relative}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{width:32px;height:32px;border-radius:50%;background:var(--el);border:1px solid var(--bh);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--a);flex-shrink:0;z-index:1;font-family:var(--mono)}
+.tl-lbl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--d);margin-bottom:4px}
+.tl-title{font-size:15px;font-weight:700;color:var(--t);margin-bottom:4px}
+.tl-body{font-size:13px;color:var(--m);line-height:1.65}
+.price-card{background:var(--card);border:1px solid var(--a);border-radius:12px;padding:30px;max-width:440px;margin:24px 0}
+.price-tag{font-size:52px;font-weight:800;color:var(--a);letter-spacing:-.04em;line-height:1;margin-bottom:4px}
+.price-note{font-size:12px;color:var(--d);margin-bottom:18px}
+.inc-list{list-style:none;display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--bh);padding-top:18px;margin-bottom:24px}
+.inc-list li{font-size:14px;color:var(--m);display:flex;align-items:center;gap:9px}
+.inc-list li::before{content:"✓";color:var(--grn);font-weight:700;flex-shrink:0}
+.guarantee{font-size:12px;color:var(--d);margin-top:14px;line-height:1.6}
+.guarantee strong{color:var(--m)}
+.about-block{display:flex;gap:22px;align-items:flex-start;margin:20px 0}
+@media(max-width:480px){.about-block{flex-direction:column}}
+.about-av{width:62px;height:62px;border-radius:50%;background:var(--bh);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px}
+.about-name{font-size:14px;font-weight:700;color:var(--t);margin-bottom:3px}
+.about-role{font-size:11px;color:var(--d);margin-bottom:10px;letter-spacing:.05em;text-transform:uppercase}
+.about-bio{font-size:14px;color:var(--m);line-height:1.75}
+.faq-list{display:flex;flex-direction:column;margin-top:20px}
+.faq-item{border-top:1px solid var(--bh);padding:18px 0}
+.faq-item:last-child{border-bottom:1px solid var(--bh)}
+.faq-q{font-size:14px;font-weight:700;color:var(--t);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;user-select:none}
+.faq-q .tog{color:var(--a);font-size:18px;font-weight:400;flex-shrink:0;transition:transform .2s}
+.faq-item.open .tog{transform:rotate(45deg)}
+.faq-a{font-size:14px;color:var(--m);line-height:1.75;display:none;padding-top:10px}
+.faq-item.open .faq-a{display:block}
+.apply-block{background:var(--el);border:1px solid var(--bh);border-radius:14px;padding:36px;margin:32px 0}
+.apply-block h3{font-size:22px;font-weight:800;letter-spacing:-.025em;margin-bottom:8px}
+.apply-sub{font-size:14px;color:var(--m);margin-bottom:28px;line-height:1.6}
+.fg{margin-bottom:18px}
+.fg label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--m);margin-bottom:7px;display:block}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--card);border:1px solid var(--bh);border-radius:7px;padding:11px 14px;font-size:14px;color:var(--t);font-family:var(--f);transition:border-color .2s;resize:vertical}
+.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--a)}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--d)}
+.fg select option{background:var(--card)}
+.fg textarea{min-height:80px}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:480px){.form-2col{grid-template-columns:1fr}}
+.submit-row{margin-top:10px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.submit-note{font-size:12px;color:var(--d)}
+.thanks{display:none;text-align:center;padding:20px 0}
+.thanks h4{font-size:20px;font-weight:800;color:var(--grn);margin-bottom:10px}
+.thanks p{font-size:15px;color:var(--m);line-height:1.7}
+.pre-cta{padding:64px 0;text-align:center;border-top:1px solid var(--b)}
+.pre-cta h2{font-size:clamp(22px,4.5vw,34px);font-weight:800;letter-spacing:-.03em;margin-bottom:12px}
+.pre-cta h2 em{font-style:normal;color:var(--a)}
+.pre-cta p{font-size:16px;color:var(--m);margin-bottom:28px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <a href="https://appliedleverage.io" class="logo">Applied <em>Leverage</em></a>
+    <span class="hbadge">Founding Cohort — 10 spots</span>
+  </header>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Agent OS Diagnostic</div>
+    <h1>90 minutes to know exactly<br>what to <em>automate first.</em></h1>
+    <p class="sub">You are already making money. You are still doing too much by hand. The problem is not hustle — it is that you do not have a clear map of where your leverage is.</p>
+    <p class="sub2">The Diagnostic gives you that map.</p>
+    <div class="hero-meta">
+      <div class="hmeta">⏱ <b>90-minute</b> working session</div>
+      <div class="hmeta">📄 <b>1-page</b> Automation Priority Map</div>
+      <div class="hmeta">💰 <b>$297</b> founding price</div>
+    </div>
+    <div class="cta-row">
+      <a href="#apply" class="btn btn-r">Apply for a Diagnostic →</a>
+      <a href="#what-you-get" class="btn btn-o">See what is included</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="s-label">The Problem</div>
+    <h2 class="s-h2">You do not have a <em>clarity problem.</em><br>You have a prioritization problem.</h2>
+    <p class="s-body">Most operators who come to me are not stuck on revenue. They are stuck on <strong>drag.</strong></p>
+    <p class="s-body">Every new client adds to the pile. Follow-up lives in your head. Delivery depends on you showing up. Admin is a tax you pay every single day.</p>
+    <p class="s-body">You have looked at AI tools. Maybe tried a few. Most of them did not stick — or they added complexity instead of removing it. Here is why: <strong>you do not know which automations will actually free up your time versus which ones will waste 20 hours and change nothing.</strong></p>
+    <p class="s-body">That is what the Diagnostic fixes.</p>
+    <ul class="prob-list">
+      <li>You are the bottleneck in your own business and you know it</li>
+      <li>You do the same 5–10 things every week that a system should handle</li>
+      <li>Your tools do not talk to each other — you are the integration layer</li>
+      <li>You have tried hiring and it did not solve the underlying process problem</li>
+      <li>You know exactly where the waste is — you just do not have a clear way to attack it</li>
+    </ul>
+  </section>
+</div>
+
+<div class="wrap" id="what-you-get">
+  <section>
+    <div class="s-label">What You Get</div>
+    <h2 class="s-h2">A working session. A real map.<br><em>No generic advice.</em></h2>
+    <p class="s-body">In 90 minutes, we audit your operating system together — your offer, your delivery flow, where you are spending time you should not be, and what your existing stack is actually doing.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🗺️</div>
+        <div class="card-title">Automation Priority Map</div>
+        <div class="card-body">A 1-page document with your top 3 highest-leverage automations, ranked by impact and effort. Not 47 ideas — three moves, in order, with reasoning.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔍</div>
+        <div class="card-title">Bottleneck Diagnosis</div>
+        <div class="card-body">A clear picture of where your operational drag is coming from — delivery, follow-up, admin, or reporting — and which one is costing you the most.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🛠️</div>
+        <div class="card-title">Stack Assessment</div>
+        <div class="card-body">An honest look at your current tools — what is doing real work, what is overhead, and where the gaps are that automation can close.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎙️</div>
+        <div class="card-title">Async Follow-Up</div>
+        <div class="card-body">Optional 15-minute voice follow-up from Lucas 48 hours after the call — once you have sat with the map and have real questions.</div>
+      </div>
+    </div>
+    <div class="callout">
+      <div class="callout-title">The Automation Priority Map</div>
+      <div class="callout-body">Delivered within 4 hours of your call. <strong>Three automations. Ranked. With reasoning.</strong> Not a list of things you could do — a specific starting sequence for your specific business. Some clients implement it themselves. Others come back for the Implementation Sprint to have it built.</div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="s-label">Who It Is For</div>
+    <h2 class="s-h2">Built for operators <em>with real businesses.</em><br>Not beginners.</h2>
+    <div class="fit-grid">
+      <div class="fit-col fit-yes">
+        <h4>Right fit</h4>
+        <ul class="fit-list">
+          <li><span class="mk">✓</span>Agency owners or consultants at $5K–$30K/month</li>
+          <li><span class="mk">✓</span>Already have clients and recurring revenue</li>
+          <li><span class="mk">✓</span>Running too much through your own hands</li>
+          <li><span class="mk">✓</span>Tried AI tools but have not found traction yet</li>
+          <li><span class="mk">✓</span>Want clarity and a plan, not tool recommendations</li>
+        </ul>
+      </div>
+      <div class="fit-col fit-no">
+        <h4>Not right fit</h4>
+        <ul class="fit-list">
+          <li><span class="mk">✗</span>Beginners with no offer or customers yet</li>
+          <li><span class="mk">✗</span>Looking for done-for-you AI implementation</li>
+          <li><span class="mk">✗</span>Under $3K/month — fix distribution first</li>
+          <li><span class="mk">✗</span>Want AI to replace strategic thinking</li>
+          <li><span class="mk">✗</span>Not willing to act on what you learn</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="s-label">How It Works</div>
+    <h2 class="s-h2">Four steps.<br><em>No fluff between them.</em></h2>
+    <ul class="timeline">
+      <li class="tl-item">
+        <div class="tl-dot">01</div>
+        <div>
+          <div class="tl-lbl">Before the call</div>
+          <div class="tl-title">Short intake form (~10 min)</div>
+          <div class="tl-body">You tell me about your business, your tools, your biggest time drains. I review it before we speak. The call runs better because of it.</div>
+        </div>
+      </li>
+      <li class="tl-item">
+        <div class="tl-dot">02</div>
+        <div>
+          <div class="tl-lbl">The session</div>
+          <div class="tl-title">90-minute working audit</div>
+          <div class="tl-body">Via Zoom or Google Meet. I ask structured questions. You answer specifically. We map your operating system together in real time.</div>
+        </div>
+      </li>
+      <li class="tl-item">
+        <div class="tl-dot">03</div>
+        <div>
+          <div class="tl-lbl">Within 4 hours</div>
+          <div class="tl-title">Your Automation Priority Map</div>
+          <div class="tl-body">Three moves. In order. With reasoning specific to your business. Delivered by email as a clean 1-page document.</div>
+        </div>
+      </li>
+      <li class="tl-item">
+        <div class="tl-dot">04</div>
+        <div>
+          <div class="tl-lbl">48 hours later (optional)</div>
+          <div class="tl-title">Async voice follow-up</div>
+          <div class="tl-body">A 15-minute voice message from Lucas after you have had time to sit with the map. Real follow-up, not a template.</div>
+        </div>
+      </li>
+    </ul>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="s-label">Pricing</div>
+    <h2 class="s-h2">Simple. <em>Founding price.</em> No surprises.</h2>
+    <div class="price-card">
+      <div class="price-tag">$297</div>
+      <div class="price-note">Founding cohort price — first 10 diagnostics only. Increases to $497 after.</div>
+      <ul class="inc-list">
+        <li>90-minute live working session</li>
+        <li>Pre-call intake form review</li>
+        <li>Custom Automation Priority Map (1-page document)</li>
+        <li>Delivered within 4 hours of the call</li>
+        <li>Optional 15-min async voice follow-up</li>
+        <li>$297 credit toward Implementation Sprint if booked within 30 days</li>
+      </ul>
+      <a href="#apply" class="btn btn-r" style="width:100%;justify-content:center;margin-bottom:12px">Apply for a Diagnostic →</a>
+      <div class="guarantee"><strong>Money-back guarantee:</strong> If you complete the call and feel the map is not useful, I will refund you. Full stop. No questions. This has never happened — but the guarantee stands.</div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="s-label">Who This Is With</div>
+    <h2 class="s-h2">Lucas Synnott — <em>Applied Leverage</em></h2>
+    <div class="about-block">
+      <div class="about-av">🎸</div>
+      <div>
+        <div class="about-name">Lucas Synnott</div>
+        <div class="about-role">Founder, Applied Leverage</div>
+        <p class="about-bio">Lucas runs Applied Leverage — a one-operator business built on AI systems, automation stacks, and zero unnecessary labor. He has spent the last two years replacing himself in every repeatable part of the business — installing an agent OS that handles planning, research, scheduling, and execution without his constant supervision. The Diagnostic is how he audits your business the same way he audited his own.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="s-label">Questions</div>
+    <h2 class="s-h2">The ones you are probably <em>already thinking.</em></h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Is this a sales call for a bigger program? <span class="tog">+</span></div>
+        <div class="faq-a">No. It is a paid diagnostic. The map is the deliverable. The Implementation Sprint is mentioned because it exists and some clients want it — but there is no pitch on the call. You pay $297, you get the audit and the map.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">I have tried AI tools before and they did not work. Is this different? <span class="tog">+</span></div>
+        <div class="faq-a">That is exactly the problem this is designed to solve. Most tools fail because they were applied to the wrong part of the workflow, or before the process was documented enough to automate. The diagnostic figures out why and gives you a specific starting point that fits your actual business.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What if I am a freelancer, not an agency owner? <span class="tog">+</span></div>
+        <div class="faq-a">If you are making $5K+ a month and running a real workload, the diagnostic applies. Solo consultants, operators, and service businesses all qualify if they have repeatable delivery and operational drag.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How long does the intake form take? <span class="tog">+</span></div>
+        <div class="faq-a">About 10 minutes if you know your business well. The more honest you are on the form, the more specific the map will be.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What is the refund policy? <span class="tog">+</span></div>
+        <div class="faq-a">If you complete the call and feel the map is not useful, I will refund you. No questions asked. This has never happened — but the guarantee is real.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How soon can I book? <span class="tog">+</span></div>
+        <div class="faq-a">Applications are reviewed within 1 business day. If you are accepted, you will get a payment link and calendar booking within 24 hours. Most accepted applicants are on a call within 3–5 days.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap" id="apply">
+  <section>
+    <div class="apply-block">
+      <h3>Apply for a Diagnostic</h3>
+      <p class="apply-sub">Application-based. Takes 2 minutes. I will respond within 24 hours. If you are not the right fit, I will tell you directly — and point you somewhere useful.</p>
+      <div id="apply-form">
+        <div class="fg">
+          <label>What do you do, and who do you do it for?</label>
+          <input type="text" placeholder="e.g. I run a paid ads agency for eCommerce brands">
+        </div>
+        <div class="form-2col">
+          <div class="fg">
+            <label>Monthly revenue (approx)</label>
+            <select>
+              <option value="">Select range</option>
+              <option>Under $3K/month</option>
+              <option>$3K–$7K/month</option>
+              <option>$7K–$15K/month</option>
+              <option>$15K–$30K/month</option>
+              <option>$30K+/month</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Team size</label>
+            <select>
+              <option value="">Select</option>
+              <option>Just me</option>
+              <option>Me + 1-2 contractors</option>
+              <option>Me + a small team</option>
+            </select>
+          </div>
+        </div>
+        <div class="fg">
+          <label>Biggest time drain right now?</label>
+          <textarea placeholder="What is the one thing eating the most time that you wish you could get off your plate?"></textarea>
+        </div>
+        <div class="fg">
+          <label>Why do you want this now, not in 3 months?</label>
+          <textarea placeholder="What changed? What is the urgency?"></textarea>
+        </div>
+        <div class="fg">
+          <label>Email address</label>
+          <input type="email" id="apply-email" placeholder="you@yourdomain.com">
+        </div>
+        <div class="submit-row">
+          <button onclick="submitApp()" class="btn btn-r">Apply — I will respond within 24 hours →</button>
+        </div>
+      </div>
+      <div class="thanks" id="apply-thanks">
+        <h4>Application received.</h4>
+        <p>I will review it and get back to you within 24 hours.<br>If you are a fit, you will get a payment link and calendar booking.<br><br>— Lucas</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <div class="pre-cta">
+    <h2>Not ready to apply yet?<br><em>Find out where you stand first.</em></h2>
+    <p>The free Automation Readiness Assessment takes 2 minutes. You get a score and a breakdown of what is blocking you — no email required.</p>
+    <div class="cta-row" style="justify-content:center">
+      <a href="https://appliedleverage.io/assess" class="btn btn-o">Take the free assessment →</a>
+      <a href="#apply" class="btn btn-r">Apply for the Diagnostic →</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <footer>
+    <a href="https://appliedleverage.io">Applied Leverage</a> &mdash; Built for operators who are serious about leverage.
+  </footer>
+</div>
+
+<script>
+function toggleFaq(el) {
+  const item = el.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+function submitApp() {
+  const email = document.getElementById('apply-email').value.trim();
+  if (!email || !email.includes('@')) {
+    alert('Please enter your email address.');
+    return;
+  }
+  document.getElementById('apply-form').style.display = 'none';
+  document.getElementById('apply-thanks').style.display = 'block';
+  // TODO: wire to form endpoint (Tally, Typeform, or Formspree)
+  console.log('Application submitted:', email);
+}
+</script>
+</body>
+</html>

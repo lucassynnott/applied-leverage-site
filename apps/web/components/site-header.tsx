@@ -14,6 +14,7 @@ const PUBLIC_NAV = [
   { href: "/discoveries", label: "Discoveries" },
   { href: "/adrs", label: "ADRs" },
   { href: "/network", label: "Network" },
+  { href: "/buy", label: "Get a Team" },
 ];
 
 const OWNER_NAV = [

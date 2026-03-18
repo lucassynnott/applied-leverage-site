@@ -1,11 +1,14 @@
 import { Suspense } from "react";
+import { connection } from "next/server";
 import { ConvexClientProvider } from "../ConvexClientProvider";
 
-export default function ConvexRouteLayout({
+export default async function ConvexRouteLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  await connection();
+
   return (
     <Suspense
       fallback={

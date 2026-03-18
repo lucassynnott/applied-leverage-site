@@ -1,32 +1,48 @@
 #!/bin/bash
-# Sync ADRs from Vault to web content directory.
-# Run via launchd (WatchPaths) or manually: ./scripts/sync-adrs.sh
+# Sync ADRs + Discoveries from workspace to web content directory.
+# Run via cron or manually: ./scripts/sync-adrs.sh
 #
-# Copies ~/Vault/docs/decisions/*.md → apps/web/content/adrs/
+# Copies ~/.openclaw/workspace/adr/*.md → apps/web/content/adrs/
+# Copies ~/.openclaw/workspace/discoveries/*.md → apps/web/content/discoveries/
 # Commits and pushes if there are changes.
 
 set -euo pipefail
 
-VAULT_ADRS="$HOME/Vault/docs/decisions"
-WEB_ADRS="$(dirname "$0")/../apps/web/content/adrs"
-REPO_ROOT="$(dirname "$0")/.."
+WORKSPACE_ADRS="$HOME/.openclaw/workspace/adr"
+WORKSPACE_DISCOVERIES="$HOME/.openclaw/workspace/discoveries"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_ROOT="$SCRIPT_DIR/.."
+WEB_ADRS="$REPO_ROOT/apps/web/content/adrs"
+WEB_DISCOVERIES="$REPO_ROOT/apps/web/content/discoveries"
 
-# Ensure target dir exists
-mkdir -p "$WEB_ADRS"
+# Ensure target dirs exist
+mkdir -p "$WEB_ADRS" "$WEB_DISCOVERIES"
 
-# Sync — delete removed ADRs, copy new/updated ones
-rsync -av --delete --include='*.md' --exclude='*' "$VAULT_ADRS/" "$WEB_ADRS/"
+# Sync ADRs
+if [ -d "$WORKSPACE_ADRS" ]; then
+  rsync -av --delete --include='*.md' --exclude='*' "$WORKSPACE_ADRS/" "$WEB_ADRS/"
+else
+  echo "WARNING: ADR source not found at $WORKSPACE_ADRS"
+fi
+
+# Sync Discoveries
+if [ -d "$WORKSPACE_DISCOVERIES" ]; then
+  rsync -av --delete --include='*.md' --exclude='*' "$WORKSPACE_DISCOVERIES/" "$WEB_DISCOVERIES/"
+else
+  echo "WARNING: Discoveries source not found at $WORKSPACE_DISCOVERIES"
+fi
 
 # Check if anything changed
 cd "$REPO_ROOT"
-if git diff --quiet apps/web/content/adrs/ && [ -z "$(git ls-files --others --exclude-standard apps/web/content/adrs/)" ]; then
-  echo "No ADR changes to sync."
+if git diff --quiet apps/web/content/adrs/ apps/web/content/discoveries/ \
+   && [ -z "$(git ls-files --others --exclude-standard apps/web/content/adrs/ apps/web/content/discoveries/)" ]; then
+  echo "No changes to sync."
   exit 0
 fi
 
 # Commit and push
-git add apps/web/content/adrs/
-git commit -m "sync: ADRs from Vault $(date +%Y-%m-%d)"
+git add apps/web/content/adrs/ apps/web/content/discoveries/
+git commit -m "sync: ADRs + discoveries from workspace $(date +%Y-%m-%d)"
 git push
 
-echo "ADRs synced and pushed."
+echo "Synced and pushed."
