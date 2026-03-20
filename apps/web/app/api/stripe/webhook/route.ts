@@ -7,7 +7,6 @@ import {
 } from "@/lib/team-install";
 import { upsertCheckoutSessionRecord } from "@/lib/team-install-store";
 
-export const runtime = "nodejs";
 
 const DEFAULT_SIGNATURE_TOLERANCE_SECONDS = 300;
 

@@ -11,7 +11,6 @@ import {
   upsertCheckoutSessionRecord,
 } from "@/lib/team-install-store";
 
-export const runtime = "nodejs";
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const sessionId = request.nextUrl.searchParams.get("session_id");

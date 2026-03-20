@@ -9,7 +9,6 @@ import {
 } from "@/lib/team-install";
 import { upsertCheckoutSessionRecord } from "@/lib/team-install-store";
 
-export const runtime = "nodejs";
 
 type StripeCheckoutSessionResponse = {
   id?: string;
