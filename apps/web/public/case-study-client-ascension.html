@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Applied Leverage | Case Study: An Embedded AI CTO Inside Client Ascension</title>
+<meta name="description" content="From dashboard sprawl to an Operator Cockpit. How Client Ascension embedded an AI CTO that ships live systems, coordinates a specialist agent fleet, and turns scattered company data into action surfaces.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://appliedleverage.io/case-study-client-ascension.html">
+<meta property="og:title" content="Case Study: An Embedded AI CTO Inside Client Ascension">
+<meta property="og:description" content="Not advice. Working systems. Live dashboards, knowledge infrastructure, a specialist agent fleet, and verification built in.">
+<meta property="og:image" content="https://appliedleverage.io/brand/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Case Study: An Embedded AI CTO Inside Client Ascension">
+<meta name="twitter:description" content="Not advice. Working systems shipped inside a real business.">
+<meta name="twitter:image" content="https://appliedleverage.io/brand/og-image.png">
+<style>
+  :root{ --gold:#c8a14a; --bone:#e8e4da; --mute:#9a9488; --line:#1c1a16; }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#000;color:var(--bone);
+    font-family:ui-monospace,"IBM Plex Mono",SFMono-Regular,Menlo,monospace;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h2{font-family:ui-serif,Georgia,"Times New Roman",serif}
+  h1{font-family:-apple-system,"Helvetica Neue",Arial,system-ui,sans-serif;font-weight:600;letter-spacing:-.01em;text-transform:capitalize}
+  h1 .g{font-family:ui-serif,Georgia,"Times New Roman",serif;font-style:italic;font-weight:500;text-transform:uppercase;letter-spacing:.005em;
+    filter:drop-shadow(0 0 7px rgba(200,161,74,.45)) drop-shadow(0 0 18px rgba(200,161,74,.22))}
+  a{color:inherit}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;position:relative;z-index:2}
+  .narrow{max-width:760px;margin:0 auto}
+  .mono{font-family:ui-monospace,"IBM Plex Mono",SFMono-Regular,Menlo,monospace}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:30;background:rgba(0,0,0,.82);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone);text-decoration:none}
+  .brand b{color:var(--gold);font-weight:600}
+  .brand-serif{font-family:ui-serif,Georgia,"Times New Roman",serif}
+  .navlinks{display:flex;align-items:center}
+  .navlinks a{font-size:13px;letter-spacing:.04em;color:var(--mute);text-decoration:none;margin-left:22px}
+  .navlinks a:hover{color:var(--bone)}
+  .navlinks a.cta{color:#000;background:var(--gold);padding:9px 16px;border-radius:6px;font-weight:600}
+
+  /* gold gradient text */
+  .goldgrad,h1 .g,.eyebrow,.kicker{
+    background:linear-gradient(118deg,#f6dc97 0%,#c8a14a 48%,#a37e2c 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);padding:72px 0 56px}
+  .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;margin:0 0 18px}
+  h1{font-weight:500;font-size:clamp(32px,4.6vw,52px);line-height:1.08;letter-spacing:.01em;margin:0 0 22px;max-width:18ch}
+  .lede{font-size:clamp(14px,1.65vw,17px);line-height:1.7;color:var(--mute);max-width:60ch;margin:0 0 30px}
+  .actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;
+    text-decoration:none;font-size:15px;letter-spacing:.02em;font-weight:500;
+    padding:13px 24px;border-radius:8px;border:1px solid transparent;
+    transform:translateZ(0);transition:transform .3s ease,box-shadow .3s ease,background .3s ease;
+    background:linear-gradient(#000,#000) padding-box,
+      linear-gradient(144deg,rgba(255,255,255,.30),rgba(255,255,255,.10) 50%,rgba(255,255,255,.20)) border-box;
+    box-shadow:0 8px 16px -4px rgba(0,0,0,.55)}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 14px 22px -6px rgba(0,0,0,.6)}
+  .btn-gold{color:#f6dc97;
+    background:linear-gradient(180deg,rgba(200,161,74,.16),rgba(0,0,0,.92)) padding-box,
+      linear-gradient(144deg,rgba(246,220,151,.85),rgba(200,161,74,.35) 50%,rgba(246,220,151,.6)) border-box}
+  .btn-gold:hover{color:#fbe9b6;
+    background:linear-gradient(180deg,rgba(200,161,74,.28),rgba(0,0,0,.82)) padding-box,
+      linear-gradient(144deg,rgba(246,220,151,1),rgba(200,161,74,.55) 50%,rgba(246,220,151,.85)) border-box}
+  .btn-ghost{color:var(--bone)}
+
+  /* sections */
+  section{padding:72px 0;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+  .kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin:0 0 14px}
+  h2{font-weight:500;font-size:clamp(24px,3.2vw,34px);line-height:1.16;margin:0 0 18px}
+  .body p{color:#cfcabd;font-size:16px;max-width:68ch;margin:0 0 18px}
+  .body p.dim{color:var(--mute)}
+
+  /* stat strip */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:8px}
+  .stat{border:1px solid #2a2620;border-radius:12px;padding:22px 20px;
+    background:linear-gradient(158deg,rgba(200,161,74,.10),rgba(0,0,0,.5) 58%);
+    box-shadow:inset 0 1px 0 rgba(246,220,151,.08),0 10px 30px -16px rgba(0,0,0,.7)}
+  .stat .n{font-size:30px;font-weight:600;color:#f6dc97;letter-spacing:-.01em;line-height:1.1}
+  .stat .l{font-size:12.5px;color:var(--mute);margin-top:8px;letter-spacing:.02em}
+
+  /* cards grid */
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:14px}
+  .card{border:1px solid #2a2620;border-radius:12px;padding:26px;
+    background:linear-gradient(158deg,rgba(200,161,74,.08),rgba(0,0,0,.5) 60%);
+    transition:transform .3s ease,border-color .3s ease}
+  .card:hover{transform:translateY(-2px);border-color:#3a342a}
+  .card h3{margin:0 0 6px;font-size:17px;font-weight:600;color:var(--bone)}
+  .card .tag{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 12px}
+  .card p{margin:0;font-size:14.5px;color:#bdb8ac;line-height:1.62}
+  .card ul{margin:12px 0 0;padding-left:18px}
+  .card li{font-size:13.5px;color:#a9a499;margin-bottom:5px}
+
+  /* lane list */
+  .lanes{margin-top:18px;display:grid;gap:10px}
+  .lane{border:1px solid #221f1a;border-radius:10px;padding:16px 20px;display:flex;gap:18px;align-items:baseline;
+    background:linear-gradient(180deg,rgba(255,255,255,.018),rgba(0,0,0,.4))}
+  .lane .role{color:#f6dc97;font-weight:600;font-size:14px;min-width:150px}
+  .lane .what{color:#aaa498;font-size:14px}
+
+  /* quote / framing */
+  .frame{border-left:2px solid var(--gold);padding:6px 0 6px 22px;margin:26px 0;max-width:64ch}
+  .frame p{font-family:ui-serif,Georgia,"Times New Roman",serif;font-style:italic;font-size:20px;color:var(--bone);line-height:1.45;margin:0}
+
+  /* receipts */
+  .receipts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 40px;margin-top:18px;max-width:760px}
+  .receipt{display:flex;justify-content:space-between;gap:16px;border-bottom:1px dashed #221f1a;padding:10px 0;font-size:14px}
+  .receipt .k{color:#bdb8ac}
+  .receipt .v{color:#f6dc97;font-weight:600;white-space:nowrap}
+  .note{color:var(--mute);font-size:12.5px;margin-top:20px;max-width:70ch;line-height:1.6}
+
+  /* cta band */
+  .ctaband{text-align:center;padding:84px 0}
+  .ctaband h2{margin-bottom:14px}
+  .ctaband p{color:var(--mute);max-width:52ch;margin:0 auto 28px}
+
+  footer{padding:34px 0;color:var(--mute);font-size:13px}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  footer a{color:var(--mute);text-decoration:none;margin-left:20px}
+  footer a:hover{color:var(--bone)}
+
+  @media(max-width:880px){
+    section{padding:52px 0}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .cards{grid-template-columns:1fr}
+    .receipts{grid-template-columns:1fr;gap:0}
+    .lane{flex-direction:column;gap:4px}
+    .lane .role{min-width:0}
+    .navlinks a:not(.cta){display:none}
+    .actions{flex-direction:column;align-items:stretch}
+    .actions .btn{width:100%}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="/"><span class="brand-serif">Applied</span> <b>Leverage</b></a>
+    <div class="navlinks">
+      <a href="/how-it-works.html">How it works</a>
+      <a class="cta" href="https://calendly.com/lucas-clientascension/applied-leverage-consult">Book a call</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap narrow">
+    <p class="eyebrow">Case study &middot; Client Ascension</p>
+    <h1>From Dashboard Sprawl To An <span class="g">Operator Cockpit</span></h1>
+    <p class="lede">Client Ascension didn't get a chatbot bolted onto Slack. It got an embedded AI CTO that plans, dispatches a specialist coding fleet, verifies its own work against tests and security gates, runs the boards, and turns scattered company data into surfaces the business can act on.</p>
+    <div class="actions">
+      <a class="btn btn-gold" href="https://calendly.com/lucas-clientascension/applied-leverage-consult">Book a call</a>
+      <a class="btn btn-ghost" href="/how-it-works.html">See how it works</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap narrow">
+    <p class="kicker">The starting state</p>
+    <h2>Scattered systems. No single source of truth.</h2>
+    <div class="body">
+      <p>A growing coaching business runs on a dozen surfaces at once. Revenue in one tool. Student health in a spreadsheet. Wins buried in a Slack channel. Coaching calls locked in Google Drive. SOPs in someone's head. To answer one operator question you open five systems and guess.</p>
+      <p>The trap most teams fall into next is worse than the sprawl: a pretty dashboard wired to stale or invented numbers. A surface that looks authoritative and lies.</p>
+      <p class="dim">The brief was blunt. Stop guessing. Build something the business can trust enough to make decisions on, with no fake data and a clear empty state wherever a source isn't ready.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">What got shipped</p>
+    <h2>Working systems, not strategy decks.</h2>
+    <div class="body"><p class="dim">Live internal infrastructure, deployed and running behind a private tunnel. A representative slice:</p></div>
+    <div class="cards">
+      <div class="card">
+        <p class="tag">Live service</p>
+        <h3>Intelligence Dashboard / Operator Cockpit</h3>
+        <p>A private, local-first CEO and operator dashboard for the real business data: revenue, students, coaches, proof, content, Slack activity, and source freshness. Built around exception management. What's broken, what changed, who owns it.</p>
+        <ul>
+          <li>CEO Daily Pulse and coach book-of-business views</li>
+          <li>Source-health and sync-failure surfacing</li>
+          <li>Role-based access and onboarding scaffolding</li>
+          <li>No fake data doctrine, enforced by middleware</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p class="tag">Live service</p>
+        <h3>Student Command Center</h3>
+        <p>A prioritized queue that tells Student Success coaches who needs action now, why, and what the evidence is. Risk scoring across payment, engagement, missing goals, and touchpoint gaps replaces alphabetical spreadsheet browsing.</p>
+        <ul>
+          <li>Scoring service plus queue API and dashboard</li>
+          <li>Churn, renewal, and check-in cadence made visible</li>
+          <li>Full spec and targeted test coverage</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p class="tag">Live service</p>
+        <h3>CA Knowledge MCP</h3>
+        <p>A searchable institutional-knowledge layer over the Slack archive, SOPs, course transcripts, and the coaching-call corpus. Agents query focused context instead of loading giant calls. A nightly timer mirrors Drive, rebuilds indexes, and restarts the service.</p>
+        <ul>
+          <li>Slack, SOP, and transcript search tools</li>
+          <li>Chunked retrieval for tight context windows</li>
+          <li>Scheduled nightly sync, fully automated</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p class="tag">Pipeline</p>
+        <h3>Proof Engine</h3>
+        <p>Moved client wins out of scattered Slack messages into a pipeline: candidate, claim, compliance gate, approved proof. An on-demand button generates a mini case study from approved claims. No claim inflation, no invented results.</p>
+      </div>
+      <div class="card">
+        <p class="tag">Infrastructure</p>
+        <h3>Credential Vault</h3>
+        <p>A local secret-management layer that keeps live integration credentials out of prompts and repos. The dashboard loads its live sources through a locked env drop-in, not pasted keys.</p>
+      </div>
+      <div class="card">
+        <p class="tag">Infrastructure</p>
+        <h3>Graph Memory</h3>
+        <p>A graph-memory service wired into the agent layer for durable people, systems, ownership, and dependency context. Stable operator knowledge that compounds instead of evaporating between sessions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap narrow">
+    <p class="kicker">How the work gets done</p>
+    <h2>One coordinator. A specialist fleet underneath.</h2>
+    <div class="body">
+      <p>This is the part that separates an embedded operator from a chat window. The AI CTO doesn't try to be everything. It runs like an engineering team: bound the scope, assign the lane, require tests, verify before accepting.</p>
+    </div>
+    <div class="lanes">
+      <div class="lane"><span class="role">Coordinator</span><span class="what">Command and control, business judgment, founder-facing reporting</span></div>
+      <div class="lane"><span class="role">Planner / Architect</span><span class="what">Planning, architecture, and final verification before work is accepted</span></div>
+      <div class="lane"><span class="role">Primary builder</span><span class="what">High-volume implementation lane</span></div>
+      <div class="lane"><span class="role">Backend / QA</span><span class="what">Backend, runtime, debugging, and test passes</span></div>
+      <div class="lane"><span class="role">Product / UI</span><span class="what">Long-context frontend and product surfaces</span></div>
+      <div class="lane"><span class="role">Research / Synthesis</span><span class="what">Long-context research and verification</span></div>
+    </div>
+    <div class="frame">
+      <p>Blockers don't sit. A watchdog inspects stuck work every 30 minutes, classifies the cause, routes a fix, verifies it, and only leaves a card blocked when the blocker is genuinely external.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="kicker">Impact</p>
+    <h2>What changed for the business.</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Decision speed</h3>
+        <p>One live operator surface instead of five tabs and a guess. The dashboard answers what's broken, what needs action, and what changed, with an owner attached.</p>
+      </div>
+      <div class="card">
+        <h3>Source trust</h3>
+        <p>Freshness, credential readiness, and sync failures are explicit states on the dashboard. The classic trap of confident, stale numbers is designed out.</p>
+      </div>
+      <div class="card">
+        <h3>Student Success leverage</h3>
+        <p>Retention risk, coaching gaps, and renewal posture became structured, queryable fields instead of tribal knowledge. Coaches work a ranked queue, not a spreadsheet.</p>
+      </div>
+      <div class="card">
+        <h3>Engineering throughput</h3>
+        <p>Execution shifted from chat-by-chat to an operating loop. Specialist lanes ship, the watchdog recovers blockers, and verification gates run before anything is marked done.</p>
+      </div>
+      <div class="card">
+        <h3>Knowledge leverage</h3>
+        <p>The coaching corpus is searchable and indexed instead of buried in Drive. Persona, product, and proof work pull from a real source base.</p>
+      </div>
+      <div class="card">
+        <h3>Risk reduction</h3>
+        <p>No secrets in prompts or repos. No fake business data in runtime. Private student data stays in audit layers, behind service and tunnel boundaries.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap narrow">
+    <p class="kicker">Receipts</p>
+    <h2>The paper trail.</h2>
+    <div class="body"><p class="dim">Verified against the live source repositories. Numbers below are read straight off the code, not estimated.</p></div>
+    <div class="receipts">
+      <div class="receipt"><span class="k">Commits since May 1</span><span class="v">96</span></div>
+      <div class="receipt"><span class="k">Tracked files in the dashboard repo</span><span class="v">346</span></div>
+      <div class="receipt"><span class="k">Test and spec files</span><span class="v">61</span></div>
+      <div class="receipt"><span class="k">Database migrations</span><span class="v">30+</span></div>
+      <div class="receipt"><span class="k">Live internal services running</span><span class="v">6+</span></div>
+      <div class="receipt"><span class="k">Coaching-call transcripts indexed</span><span class="v">280+</span></div>
+      <div class="receipt"><span class="k">Searchable transcript chunks</span><span class="v">2,800+</span></div>
+      <div class="receipt"><span class="k">Specialist agent lanes in rotation</span><span class="v">6</span></div>
+      <div class="receipt"><span class="k">Blocker watchdog cadence</span><span class="v">every 30 min</span></div>
+      <div class="receipt"><span class="k">Release-hygiene test pass</span><span class="v">135 / 135</span></div>
+    </div>
+    <p class="note">Repository metrics are verified directly against the live GitHub source. Service, board, transcript, and test-pass figures are reported from the operator's working systems and durable operating record. Exact revenue impact is intentionally not claimed here.</p>
+  </div>
+</section>
+
+<section class="ctaband">
+  <div class="wrap narrow">
+    <p class="kicker">The takeaway</p>
+    <h2>This is what embedded looks like.</h2>
+    <p>Not a tool you rent. An operator that ships, verifies, and compounds inside your business. If you run a company between five and seven figures and you're drowning in your own systems, this is the move.</p>
+    <div class="actions" style="justify-content:center">
+      <a class="btn btn-gold" href="https://calendly.com/lucas-clientascension/applied-leverage-consult">Book a call</a>
+      <a class="btn btn-ghost" href="/how-it-works.html">See how it works</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="mono">&copy; Applied Leverage</span>
+    <span>
+      <a href="/">Home</a>
+      <a href="/how-it-works.html">How it works</a>
+      <a href="https://calendly.com/lucas-clientascension/applied-leverage-consult">Book a call</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>
